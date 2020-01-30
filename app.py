@@ -299,28 +299,63 @@ def user_logged():
 
 
 # users view
-@app.route('/users', methods=['GET'])
+@app.route('/users', methods=['POST'])
 def user_view():
-    # workleft: change this method to post and firstly check admin stat
+    # Pass JWT Token in Header
     """return: detail of all registered users
     """
-    all_users = Users.query.all()
-    result = users_schema.dump(all_users)
-    return jsonify(result)
+    auth_header = request.headers.get('Authorization')
+    user_detail = user_info(auth_header)
+
+    if user_detail != 'AuthFail' and user_detail.get('admin'): # NoneType | 0| 1
+        all_users = Users.query.all()
+        result = users_schema.dump(all_users)
+        return jsonify(result)
+    
+    elif user_detail.get('admin') == 0:
+        return jsonify({
+            'Status':'Fail',
+            'Reason':'Not Admin'
+        })
+    
+    else:
+        return jsonify({
+            'Status':'Fail',
+            'Reason':'AuthFail'
+        })
+
 
 # user view
-@app.route('/users/<id>', methods=['GET'])
+@app.route('/users/<id>', methods=['POST'])
 def single_user_view(id):
-    # workleft: change this method to post and firstly check admin stat
+    # Pass JWT Token in Header
     """return: detail of user for provided <id>
     """
-    user = Users.query.get(id)
-    return jsonify({
-        'id':id,
-        'email':user.email,
-        'username':user.username,
-        'password':user.password
-    })
+    auth_header = request.headers.get('Authorization')
+    user_detail = user_info(auth_header)
+
+    if user_detail != 'AuthFail' and user_detail.get('admin'): # NoneType | 0| 1
+        user = Users.query.get(id)
+        return jsonify({
+            'id':id,
+            'email':user.email,
+            'username':user.username,
+            'password':user.password
+        })
+    
+    elif user_detail.get('admin') == 0:
+        return jsonify({
+            'Status':'Fail',
+            'Reason':'Not Admin'
+        })
+    
+    else:
+        return jsonify({
+            'Status':'Fail',
+            'Reason':'AuthFail'
+        })
+
+
 
 
 
@@ -413,7 +448,7 @@ def on_join(data):
     mymessage = {
         'username':data['username']
     }
--
+
     emit('join_room', json.dumps(mymessage), room=room)
 
 
