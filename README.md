@@ -8,14 +8,15 @@
 
 ---
 [![DOCS](https://img.shields.io/badge/Documentation-postman%20docs-green?style=flat-square&logo=appveyor)](https://documenter.getpostman.com/view/9118595/SWTBfJAv) 
-  [![UI ](https://img.shields.io/badge/User%20Interface-Link%20to%20UI-orange?style=flat-square&logo=appveyor)](INSERT_UI_LINK_HERE)
 
 
 ## Functionalities
-- [ ]  < insert functionality >
-- [ ]  < insert functionality >
-- [ ]  < insert functionality >
-- [ ]  < insert functionality >
+- [x]  Real Time Attendence
+- [x]  Multiple Simultaneous events supported
+- [x]  Live status to admin
+- [x]  Live broadcast to each event participants 
+- [x]  Proxy check measure by location check
+
 
 <br>
 
@@ -23,27 +24,27 @@
 ## Instructions to run
 
 * Pre-requisites:
-	-  < insert pre-requisite >
-	-  < insert pre-requisite >
+	-  Python3
 
-* < directions to install > 
+* Directions to setup in linux 
 ```bash
-< insert code >
+python3 -m venv env
+source env/bin/activate
+pip install -r req.txt
 ```
 
-* < directions to execute >
+* Directions to execute
 
 ```bash
-< insert code >
+python3 app.py
+Now in your browser open files index.html and index2.html
 ```
 
 <br>
 
 ## Contributors
 
-* [ DSC-VIT ](INSERT_PROFILE_URL_HERE)
-* [ < INSERT NAME HERE > ](INSERT_PROFILE_URL_HERE)
-
+* [ DSC-VIT ](https://github.com/GDGVIT)
 
 
 <br>
