@@ -413,7 +413,7 @@ def on_join(data):
     mymessage = {
         'username':data['username']
     }
-
+-
     emit('join_room', json.dumps(mymessage), room=room)
 
 
