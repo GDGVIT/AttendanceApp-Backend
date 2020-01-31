@@ -1,0 +1,267 @@
+{
+	"info": {
+		"_postman_id": "dfc53d04-cffe-411c-85d3-8032fdbd20c6",
+		"name": "attendence-app0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:5000/user/signup?username=kush&password=123456&email=mail@mail1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\":\"kush\",\n\t\"password\":\"123456\",\n\t\"email\":\"mail@mail\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/user/signup?username=kush&password=123456&email=mail@mail1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"signup"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "kush"
+						},
+						{
+							"key": "password",
+							"value": "123456"
+						},
+						{
+							"key": "email",
+							"value": "mail@mail1"
+						}
+					]
+				},
+				"description": "Here user do signup"
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5000/users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/users",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"users"
+					]
+				},
+				"description": "It shows all registered users"
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5000/user/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE1ODAwNTUyMDAsImlhdCI6MTU4MDA1NTE5NSwic3ViIjoyfQ.A9qpwKb21ElKf5NiT6Cd0j6nzrfD8v-SUx9eGNz3fhg",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\": \"mail@mail\",\n    \"password\": \"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/user/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "Here login is done and JWT is returned"
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5000/user/logged",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTE2Mzc2NDksImlhdCI6MTU4MDEwMTY0NCwic3ViIjoxfQ.QkM-DsJR0yuVbSL-ElkQeHG0xYPpF_BrA-lJhi8MZqk",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/user/logged",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"user",
+						"logged"
+					]
+				},
+				"description": "Pass JWT in every user request to keep user logged in."
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5000/event/create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTE2MDQyNTksImlhdCI6MTU4MDA2ODI1NCwic3ViIjoxfQ.pFxvZSd8YqzEykuOOGM5aZKhArJBYW1LFTsjd4JgWx4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"otp\":\"123456\",\n\t\"event_name\":\"fun event\",\n\t\"event_description\":\"It is a fun event where everyone is suppossed to enjoy\",\n\t\"ending_time_delta\":15,\n\t\"location_range\":100\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/event/create",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"event",
+						"create"
+					]
+				},
+				"description": "Event creation route, Admin fills the form and then it gets stored to database"
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5000/attendence",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTE2MDQyNTksImlhdCI6MTU4MDA2ODI1NCwic3ViIjoxfQ.pFxvZSd8YqzEykuOOGM5aZKhArJBYW1LFTsjd4JgWx4",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"event_otp\":\"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/attendence",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"attendence"
+					]
+				},
+				"description": "Giving Attendence. This endpoint is not needed but for test purposes."
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
