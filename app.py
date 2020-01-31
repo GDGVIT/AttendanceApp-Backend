@@ -4,10 +4,20 @@ import json
 import datetime
 
 # external
-from flask import Flask, request, jsonify, make_response
-from flask_socketio import SocketIO, send, emit, join_room, leave_room
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
+import jwt
+from flask import (
+    Flask,
+    request,
+    jsonify,
+    make_response,
+)
+from flask_socketio import (
+    SocketIO, 
+    send, 
+    emit, 
+    join_room, 
+    leave_room,
+)
 from sqlalchemy import (
     Column,
     Integer,
@@ -18,7 +28,9 @@ from sqlalchemy import (
     Sequence,
     Float,
 )
-import jwt
+from flask_sqlalchemy import SQLAlchemy
+from flask_marshmallow import Marshmallow
+
 
 
 def debug(msg):
@@ -43,16 +55,16 @@ socketio = SocketIO(app, cors_allowed_origins='*')
 
 # Distance Calculator
 def distance(origin, destination):
-    """Find distance between two given points
-    params: (['latitudeA', 'longitudeA'], ['latitudeB', 'longitudeB'])
-    """
 
-    # Usage: distance([40.689202777778, -74.044219444444],
-    #             [38.889069444444, -77.034502777778])
-    #       or
-    # distance([latitudeA, longitudeA],
-    #             [latitudeB, longitudeB])
-    # return: distance in meters, round by 2
+    """
+    Find distance between two given coordinates
+    :param arg1: ['latitudeA', 'longitudeA']
+    :param arg2: ['latitudeB', 'longitudeB']
+    :type arg1: list
+    :type arg2: list
+    :return: distance in meters, round by 2
+    :type: Integer
+    """
 
     # Conversions:
     # d_km = d_km/1000
@@ -77,9 +89,13 @@ def distance(origin, destination):
 # JWT ENCODE/DECODE FUNCTIONS
 
 def encode_auth_token(user_id):
+
     """
     Generates the Auth Token
-    :return: string
+    :param arg1: User ID
+    :type arg1: Integer
+    :return: JWT Token
+    :rtype: string
     """
     try:
         payload = {
@@ -95,11 +111,15 @@ def encode_auth_token(user_id):
     except Exception as e:
         return e
 
+
 def decode_auth_token(auth_token='auth_header'):
+
     """
     Decodes the auth token
-    :param: auth_token
-    :return: integer (user_id)|string (error)
+    :param arg1: JWT Token
+    :type arg1: String
+    :return: User ID | Exception
+    :rtype: Integer |  String
     """
     try:
         payload = jwt.decode(auth_token, app.config.get('SECRET_KEY'))
@@ -113,8 +133,13 @@ def decode_auth_token(auth_token='auth_header'):
 # Function that gives user id, username, email and admin_status from JWT Token
 
 def user_info(token):
-    # pass auth_header and else is done here :)
-    """return type: dict
+
+    """
+    Give User Details by simplying passing JWT Token
+    :param arg1: JWT Token
+    :type arg1: String
+    :return: User Detail | 'AuthFail'
+    :rtype: Dict | String
     """
     auth_token = token.split(" ")[0]
     resp = decode_auth_token(auth_token)
@@ -132,8 +157,10 @@ def user_info(token):
 ### Models
 
 class Users(db.Model):
+
     # pk is email
-    """API call will interact with Users table
+    """
+    API call will interact with Users table
     """
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
@@ -149,9 +176,11 @@ class Users(db.Model):
 
 
 class Events(db.Model):
+
     # pk is id
     # one-to-many with Attendence
-    """API call will interact with Events table
+    """
+    API call will interact with Events table
     """
     __tablename__ = "events"
     id = Column(Integer, primary_key=True)
@@ -170,8 +199,10 @@ class Events(db.Model):
 
 
 class Attendence(db.Model):
+
     # pk is id
-    """SocketIO will interact with Attendence table
+    """
+    SocketIO will interact with Attendence table
     """
     __tablename__ = "attendences"
     id = Column(Integer, primary_key=True)
@@ -282,7 +313,9 @@ def user_login():
 # This is for testing, it may not be needed
 @app.route('/user/logged', methods=['POST'])
 def user_logged():
-    """return: id, memail, name, admin_status for logged in user | Failure message if authorization fails
+
+    """
+    return: id, memail, name, admin_status for logged in user | Failure message if authorization fails
     """
     auth_header = request.headers.get('Authorization')
     if auth_header:
@@ -317,8 +350,10 @@ def user_logged():
 # users view
 @app.route('/users', methods=['GET'])
 def user_view():
+
     # Pass JWT Token in Header
-    """return: detail of all registered users
+    """
+    return: detail of all registered users
     """
     auth_header = request.headers.get('Authorization')
     user_detail = user_info(auth_header)
@@ -349,8 +384,10 @@ def user_view():
 # user view
 @app.route('/users/<id>', methods=['GET'])
 def single_user_view(id):
+
     # Pass JWT Token in Header
-    """return: detail of user for provided <id>
+    """
+    return: detail of user for provided <id>
     """
     auth_header = request.headers.get('Authorization')
     user_detail = user_info(auth_header)
@@ -388,7 +425,9 @@ def single_user_view(id):
 # create event
 @app.route('/event/create', methods=['POST'])
 def create_event():
-    """Endpoint to create an Event
+
+    """
+    Endpoint to create an Event
     Required: Authorized and admin
     return: event detail | auth fail
     """
@@ -441,6 +480,7 @@ def create_event():
 # API is not needed here. For Testing Purposes.
 @app.route('/attendence', methods=['POST'])
 def attendence_post():
+
     # If status is 0 then treat it as not present and specify reason
     # out of raidus distance
 
@@ -494,7 +534,9 @@ def attendence_post():
 
 @socketio.on('join', namespace='/rooms_namespace')
 def on_join(data):
-    """verify if attendence is success 
+
+    """
+    verify if attendence is success 
     then get them join in that room name with otp added
     now broadcast to that room
     """
@@ -520,7 +562,9 @@ def on_join(data):
 
 @socketio.on('admin_stats', namespace='/admin_namespace')
 def made_for_admin():
-    """To tell flask-SocketIO that there exsists a namespace named admin_namespace
+
+    """
+    To tell flask-SocketIO that there exsists a namespace named admin_namespace
     then we can use it in functions written below. Or else error will be thrown.
     """
     #admin_stats is mapped with admin_listen
@@ -530,8 +574,10 @@ def made_for_admin():
 
 @socketio.on('attendence_request', namespace='/attendence_namespace')
 def take_attendence_from_user(json_):
+    
     #attendence_request is mapped with attendence_result at now
-    """This will mark attendence if valid or return failure reason
+    """
+    This will mark attendence if valid or return failure reason
     at the namespace 'attendence_namespace' and this is done privately for
     the user.
     It also broadcasts the attendence result to
@@ -687,3 +733,4 @@ broadcaster_namespace -> attendence comes to this namespace also, from here it's
 # empty password is allowed :) Yes, Auth is just to keep users track
 # only single ip connection allowed for 1 user
 # clean datetime.datetime.now()
+# check bugs for sockets
