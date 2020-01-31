@@ -347,6 +347,7 @@ def user_view():
 # user view
 @app.route('/users/<id>', methods=['GET'])
 def single_user_view(id):
+    
     # Pass JWT Token in Header
     """return: detail of user for provided <id>
     """
