@@ -318,7 +318,7 @@ def user_logged():
 
 
 # users view
-@app.route('/users', methods=['POST'])
+@app.route('/users', methods=['GET'])
 def user_view():
     # Pass JWT Token in Header
     """return: detail of all registered users
@@ -345,7 +345,7 @@ def user_view():
 
 
 # user view
-@app.route('/users/<id>', methods=['POST'])
+@app.route('/users/<id>', methods=['GET'])
 def single_user_view(id):
     # Pass JWT Token in Header
     """return: detail of user for provided <id>
@@ -621,11 +621,10 @@ broadcaster_namespace -> attendence comes to this namespace also, from here it's
 # use bcrypt to genrate and store passwords in hashes only-
     # signup, create and commit in database
     # login, check
-# check for already registered users:-> not possible as we email is pk
 # make use of make_response, to add status code as well along with jsonify return
 
 # from passlib.hash import pbkdf2_sha256 as sha256
-# clean datetime.datetime.now()
+# jwt token expiry thing api
 
 
 # In Events table, admin name is used, can be either made unique during /
@@ -641,3 +640,4 @@ broadcaster_namespace -> attendence comes to this namespace also, from here it's
 # replace flask-jwt with flask-jwt-extended
 # empty password is allowed :) Yes, Auth is just to keep users track
 # only single ip connection allowed for 1 user
+# clean datetime.datetime.now()
