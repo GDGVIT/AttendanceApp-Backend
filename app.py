@@ -4,7 +4,7 @@ import json
 import datetime
 
 # external
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_socketio import SocketIO, send, emit, join_room, leave_room
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -20,10 +20,6 @@ from sqlalchemy import (
 )
 import jwt
 
-import warnings
-# https://github.com/marshmallow-code/flask-marshmallow/issues/53
-with warnings.catch_warnings():
-     from flask_marshmallow import Marshmallow
 
 def debug(msg):
     print('\n\n\n'+msg+'\n\n\n')
@@ -130,7 +126,7 @@ def user_info(token):
             'username':user.username,
             'admin':user.admin_status
         }
-    return 'AuthFail'
+    return 'AuthFail' #This should have been changed to dict type
 
 
 ### Models
@@ -190,6 +186,7 @@ class Attendence(db.Model):
 
 
 ### Scehmas
+## Maybe I never needed Schemas :?
 
 # Users schema
 class UserSchema(ma.Schema):
@@ -326,54 +323,63 @@ def user_view():
     auth_header = request.headers.get('Authorization')
     user_detail = user_info(auth_header)
 
-    if user_detail != 'AuthFail' and user_detail.get('admin'): # NoneType | 0| 1
-        all_users = Users.query.all()
-        result = users_schema.dump(all_users)
-        return jsonify(result)
+    if user_detail != 'AuthFail':
+
+        if user_detail.get('admin'): # NoneType | 0| 1
+            all_users = Users.query.all()
+            result = users_schema.dump(all_users)
+            payLoad = result
+            return make_response(jsonify(payLoad), 200)
     
-    elif user_detail.get('admin') == 0:
-        return jsonify({
-            'Status':'Fail',
-            'Reason':'Not Admin'
-        })
+        elif user_detail.get('admin') == 0:
+            payLoad = {
+                'Status':'Fail',
+                'Reason':'Not Admin'
+            }
+            return make_response(jsonify(payLoad), 403)
     
     else:
-        return jsonify({
+        payLoad = {
             'Status':'Fail',
             'Reason':'AuthFail'
-        })
+        }
+        return make_response(jsonify(payLoad), 401)
 
 
 # user view
 @app.route('/users/<id>', methods=['GET'])
 def single_user_view(id):
-    
     # Pass JWT Token in Header
     """return: detail of user for provided <id>
     """
     auth_header = request.headers.get('Authorization')
     user_detail = user_info(auth_header)
 
-    if user_detail != 'AuthFail' and user_detail.get('admin'): # NoneType | 0| 1
-        user = Users.query.get(id)
-        return jsonify({
-            'id':id,
-            'email':user.email,
-            'username':user.username,
-            'password':user.password
-        })
+    if user_detail != 'AuthFail':
+
+        if user_detail.get('admin'): # NoneType | 0| 1
+            user = Users.query.get(id)
+            payLoad = {
+                'id':id,
+                'email':user.email,
+                'username':user.username,
+                'password':user.password
+            }
+            return make_response(jsonify(payLoad), 200)
     
-    elif user_detail.get('admin') == 0:
-        return jsonify({
-            'Status':'Fail',
-            'Reason':'Not Admin'
-        })
+        elif user_detail.get('admin') == 0:
+            payLoad = {
+                'Status':'Fail',
+                'Reason':'Not Admin'
+            }
+            return make_response(jsonify(payLoad), 403)
     
     else:
-        return jsonify({
+        payLoad = {
             'Status':'Fail',
             'Reason':'AuthFail'
-        })
+        }
+        return make_response(jsonify(payLoad), 401)
 
 
 
@@ -389,7 +395,10 @@ def create_event():
 
     auth_header = request.headers.get('Authorization')
     user_details = user_info(auth_header)
-    admin_status_ = user_details.get('admin')
+    try:
+        admin_status_ = user_details.get('admin')
+    except:
+        admin_status = 0
 
     if user_details != 'AuthFail' and admin_status_:
         creation_date_ = datetime.datetime.now()
@@ -400,21 +409,33 @@ def create_event():
         event_description_ = request.json['event_description']
         ending_time_delta_ = request.json['ending_time_delta']
         location_range_ = request.json['location_range']
+
+        otp_check = Events.query.filter_by(otp=otp_).first()
+
+        if otp_check: #exsists
+            payLoad = {
+                'Status': 'Fail',
+                'Reason': 'OTP has expired' #used otp
+            }
+            return make_response(jsonify(payLoad), 400)
         
-        new_event = Events(creation_date= creation_date_, admin_name=admin_name_, \
-                otp=otp_, event_name=event_name_, event_description=event_description_, \
-                ending_time_delta=ending_time_delta_, location_range=location_range_)
+        else:  
+            new_event = Events(creation_date= creation_date_, admin_name=admin_name_, \
+                    otp=otp_, event_name=event_name_, event_description=event_description_, \
+                    ending_time_delta=ending_time_delta_, location_range=location_range_)
 
-        db.session.add(new_event)
-        db.session.commit()
+            db.session.add(new_event)
+            db.session.commit()
 
-        return event_schema.jsonify(new_event)
+            payLoad = event_schema.jsonify(new_event)
+            return make_response(payLoad, 200) # Object of type Response is not JSON serializable
         
     else:
-        return jsonify({
+        payLoad = {
             'status':'Fail',
             'message':'Authentication Failure'
-        })
+        }
+        return make_response(jsonify(payLoad), 401)
 
 
 # API is not needed here. For Testing Purposes.
@@ -423,29 +444,51 @@ def attendence_post():
     # If status is 0 then treat it as not present and specify reason
     # out of raidus distance
 
-    #check if event already exsists then don't let it
+    # event exsists -done
+    # user authorized -done
 
-    event_otp_ = request.json['event_otp']
-    
-    email_ = user_info(request.headers.get('Authorization')).get("email")
+    event_otp_ = request.json.get('event_otp')
     datetime_ = datetime.datetime.now()
+    try:
+        email_ = user_info(request.headers.get('Authorization')).get("email")
+    except: # User Doesn't exsist.
+        email_ = ''
+        payLoad = {
+            "event_otp":event_otp_,
+            "email":email_,
+            "datetime":datetime_,
+            "status":0
+        }
+        return make_response(jsonify(payLoad), 404)
+
     # workleft: In api take latitude and longitude of user and then
     # compare it with admins lat and long and judge on distance param
     status_ = 1 # code logic needed here
+    try:
+        event_id_ = Events.query.filter_by(otp = event_otp_).first().id
+        new_attendence = Attendence(event_id=event_id_, event_otp=event_otp_, email=email_, \
+            datetime=datetime_, status=status_)
+        db.session.add(new_attendence)
+        db.session.commit()
+        payLoad = {
+            "event_otp":event_otp_,
+            "email":email_,
+            "datetime":datetime_,
+            "status":status_
+        }
+        return make_response(jsonify(payLoad), 200)
 
-    event_id_ = Events.query.filter_by(otp = event_otp_).first().id
-    new_attendence = Attendence(event_id=event_id_, event_otp=event_otp_, email=email_, \
-        datetime=datetime_, status=status_)
-    
-    db.session.add(new_attendence)
-    db.session.commit()
+    except: # No such event
+        event_id_ = -1
+        payLoad = {
+            "event_otp":event_otp_,
+            "email":email_,
+            "datetime":datetime_,
+            "status":0
+        }
+        return make_response(jsonify(payLoad), 404)
 
-    return jsonify({
-        "event_otp":event_otp_,
-        "email":email_,
-        "datetime":datetime_,
-        "status":status_
-    })
+
 
 
 
@@ -455,17 +498,20 @@ def on_join(data):
     then get them join in that room name with otp added
     now broadcast to that room
     """
-    data = json.loads(data) # now it's dict form, before it was string
+    try:
+        data = json.loads(data) # now it's dict form, before it was string
+    except:
+        data = {}
 
-    status = data['status']
+    status = data.get('status')
     if status!='Success':
         return ''
     
-    room = '-'.join(data['event_name'].split(' ')) + '-' + str(data['otp'])
-    username = data["username"] #add this to payLoad (clientside)
+    room = '-'.join(data.get('event_name').split(' ')) + '-' + str(data['otp'])
+    username = data.get("username") #add this to payLoad (clientside)
     join_room(room)
     mymessage = {
-        'username':data['username']
+        'username':data.get('username')
     }
 
     emit('join_room', json.dumps(mymessage), room=room)
@@ -632,7 +678,6 @@ broadcaster_namespace -> attendence comes to this namespace also, from here it's
 #registration or make it admin email. Ask?
 # add field admin_email in events model
 # add admin_email field in sockets attendence_namespace payLoad for admin
-
 
 ## model changes
 # add field admin_email in events model
