@@ -30,6 +30,7 @@ from sqlalchemy import (
 )
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from os import environ
 
 
 
@@ -43,7 +44,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
     os.path.join(basedir, 'db.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = '\xfa\xfe\xc5\x8d \xaf\xbe\xb8`\xbfz\xbc\x96Z\x9b\xc1\x9b]\xefB\x1a\x1b\xe7\xf4'
+app.config['SECRET_KEY'] = environ.get('STRIPE_API_KEY')
 
 
 db = SQLAlchemy(app)
@@ -675,7 +676,6 @@ def take_attendence_from_user(json_):
             'otp':-1
         }
         emit('admin_listen', json.dumps(payLoad), namespace='/admin_namespace')
-
 
 
 if __name__ == '__main__':
