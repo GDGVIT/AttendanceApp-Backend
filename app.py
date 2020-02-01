@@ -142,7 +142,10 @@ def user_info(token):
     :return: User Detail | 'AuthFail'
     :rtype: Dict | String
     """
-    auth_token = token.split(" ")[0]
+    try:
+        auth_token = token.split(" ")[0]
+    except: # No JWT Token in header
+        return 'AuthFail'
     resp = decode_auth_token(auth_token)
     if not isinstance(resp, str):
         user = Users.query.filter_by(id=resp).first()
