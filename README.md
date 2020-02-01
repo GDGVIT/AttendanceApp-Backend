@@ -8,7 +8,7 @@
 
 ---
 [![DOCS](https://img.shields.io/badge/Documentation-postman%20docs-green?style=flat-square&logo=appveyor)](https://documenter.getpostman.com/view/9118595/SWTBfJAv)
-[![DOCS](https://img.shields.io/badge/Documentation-postman%20docs-green?style=flat-square&logo=appveyor)](https://documenter.getpostman.com/view/9118595/SWTBfJAv)
+[![DOCS](https://img.shields.io/badge/Documentation-Testing%20Guide-green?style=flat-square&logo=appveyor)](https://github.com/D-E-F-E-A-T/AttendanceApp-Backend/blob/factored_code_beta/Guides/TestingGuide.md)
 
 
 ## Functionalities
