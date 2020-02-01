@@ -70,7 +70,6 @@
 
 - [ Ubaid ](https://github.com/Geek-ubaid/)
 - [ Angad ](https://github.com/L04DB4L4NC3R)
-- [ Kush ](https://github.com/D-E-F-E-A-T/)
 
 
 <br>
@@ -81,6 +80,5 @@
 </p>
 
 
-	
-
-
+[![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://github.com/D-E-F-E-A-T) 
+[![LinkedIn](https://img.shields.io/static/v1.svg?label=Connect&message=@Kush&color=grey&logo=linkedin&labelColor=blue&style=social)](https://www.linkedin.com/in/kush-choudhary-567b38169?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BDYkgbUGhTniMSRqOUkdN3A%3D%3D) [![Instagram](https://img.shields.io/badge/Instagram-follow-yellow.svg?logo=instagram&logoColor=white)](https://www.instagram.com/kush.philosopher/)
