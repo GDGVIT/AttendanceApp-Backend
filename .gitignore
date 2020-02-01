@@ -26,6 +26,8 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+testing_files
+testing_files/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -130,3 +132,5 @@ dmypy.json
 
 env
 .vscode
+
+db.sqlite

@@ -7,7 +7,8 @@
 	<h4 align="center"> index.html and index2.html are to test sockets, run them along with server and test their. Keep your dev console open. All things are checked but do testify everything that you think can crash and create issue. Much of left work is written in code but you can create issue for the same. </h4>
 
 ---
-[![DOCS](https://img.shields.io/badge/Documentation-postman%20docs-green?style=flat-square&logo=appveyor)](https://documenter.getpostman.com/view/9118595/SWTBfJAv) 
+[![DOCS](https://img.shields.io/badge/Documentation-postman%20docs-green?style=flat-square&logo=appveyor)](https://documenter.getpostman.com/view/9118595/SWTBfJAv)
+[![DOCS](https://img.shields.io/badge/Documentation-postman%20docs-green?style=flat-square&logo=appveyor)](https://documenter.getpostman.com/view/9118595/SWTBfJAv)
 
 
 ## Functionalities
@@ -21,30 +22,43 @@
 <br>
 
 
-## Instructions to run
+#### Pre-requisites:
+  - Python3
 
-* Pre-requisites:
-	-  Python3
-
-* Directions to setup in linux 
-```bash
-python3 -m venv env
-source env/bin/activate
-pip install -r req.txt
+#### Directions to setup in linux 
+  - setup environment
+```
+    python3 -m venv env
+    source env/bin/activate
+```
+  - install requirements
+```
+    pip install -r req.txt
+```
+  - set SecretKey
+```
+    export STRIPE_API_KEY=12345
+```
+  - create Database
+```
+    python
+    from app import db
+    db.create_all()
 ```
 
-* Directions to execute
+#### Directions to start
 
-```bash
-python3 app.py
-Now in your browser open files index.html and index2.html
+```
+    python app.py
 ```
 
 <br>
 
 ## Contributors
 
-* [ DSC-VIT ](https://github.com/GDGVIT)
+- [ Ubaid ](https://github.com/Geek-ubaid/)
+- [ Angad ](https://github.com/L04DB4L4NC3R)
+- [ Kush ](https://github.com/D-E-F-E-A-T/)
 
 
 <br>
@@ -53,4 +67,5 @@ Now in your browser open files index.html and index2.html
 <p align="center">
 	Made with :heart: by DSC VIT
 </p>
+
 
