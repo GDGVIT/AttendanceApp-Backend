@@ -25,7 +25,7 @@ attendences_schema = AttendenceSchema(many=True)
 class EventSchema(ma.Schema):
     class Meta:
         fields = ('id', 'creation_date', 'admin_email', 'otp', 'event_name', \
-            'event_description', 'ending_time_delta', 'location_range')
+            'event_description', 'ending_time_delta', 'location_range', 'latitude', 'longitude', 'broadcast_choice')
 
 event_schema = EventSchema()
 events_schema = EventSchema(many=True)

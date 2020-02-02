@@ -85,18 +85,18 @@ class Events(db.Model):
     __tablename__ = "events"
     id = Column(Integer, primary_key=True)
     creation_date = Column(DateTime)
-    #admin_name = Column(String(50)) Remove it!
     admin_email = Column(String(60))
     attendence = db.relationship(
         'Attendence', backref='event', lazy=True)
     # These are the required fields in post request
-    otp = Column(String(6), nullable=False, unique=True) #900,000 Events supported without flushing data
+    otp = Column(String(6), nullable=False, unique=True) #900,000 Events supported without flushing data (Don't know but I passed more lol)
     event_name = Column(String(100))
     event_description = Column(String(2000), nullable=True)
     ending_time_delta = Column(Integer) #Treated in Minutes
     location_range = Column(Integer)  # Treated in meters
-    # needs users lat and long also
-    # an option to allow or disallow broadcast to users
+    latitude = Column(Float)
+    longitude = Column(Float)
+    broadcast_choice = Column(Boolean)  # an option to allow or disallow broadcast to users
 
 
 class Attendence(db.Model):
@@ -109,8 +109,8 @@ class Attendence(db.Model):
     id = Column(Integer, primary_key=True)
     event_id = Column(Integer, ForeignKey('events.id'))
 
-    event_otp = Column(String(6), nullable=False) #before inserting check if otp does exsists in events table
+    event_otp = Column(String(6), nullable=False)
     
     email = Column(String(60))
     datetime = Column(DateTime)
-    status = Column(Boolean) #presence column, for location ambiguity, server handled
+    status = Column(Boolean) #presence column for location ambiguity (server handled)

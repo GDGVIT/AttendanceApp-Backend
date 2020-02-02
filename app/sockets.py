@@ -30,8 +30,10 @@ def on_join(data):
         'RoomName':room
     }
 
-    emit('join_room', json.dumps(mymessage), room=room)
+    broadcast_choice_ = Events.query.filter_by(otp = data['otp']).first().broadcast_choice
 
+    if broadcast_choice_:
+        emit('join_room', json.dumps(mymessage), room=room)
 
 
 @socketio.on('admin_stats', namespace='/admin_namespace')
@@ -43,7 +45,6 @@ def made_for_admin():
     """
     #admin_stats is mapped with admin_listen
     pass
-
 
 
 @socketio.on('attendence_request', namespace='/attendence_namespace')

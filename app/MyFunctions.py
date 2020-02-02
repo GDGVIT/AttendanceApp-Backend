@@ -27,7 +27,7 @@ def distance(origin, destination):
     a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
         * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-    d = radius * c
+    d = abs(radius * c)
 
     return round(d*1000, 2)  # in meters
 
@@ -96,7 +96,7 @@ def user_info(token):
     resp = decode_auth_token(auth_token)
     if not isinstance(resp, str):
         user = Users.query.filter_by(id=resp).first()
-        
+
         try: # suppose a user is deleted, then token is valid, and thus request reaches here and then error as no id for deleted user
             return {
                 'id':user.id,

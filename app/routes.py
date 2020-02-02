@@ -235,7 +235,15 @@ def create_event():
         event_name_ = request.json['event_name']
         event_description_ = request.json['event_description']
         ending_time_delta_ = request.json['ending_time_delta']
-        location_range_ = request.json['location_range']
+        location_range_ = request.json.get('location_range')
+        latitude_ = request.json.get('latitude')
+        longitude_ = request.json.get('longitude')
+        broadcast_choice_ = request.json.get('broadcast_choice')
+
+        if location_range_==None or latitude_==None or longitude_==None: # Measure to protect issues
+            latitude_ = -1.1
+            longitude_ = -1.1
+            location_range_ = -1
 
         otp_check = Events.query.filter_by(otp=otp_).first()
 
@@ -249,7 +257,8 @@ def create_event():
         else:  
             new_event = Events(creation_date= creation_date_, admin_email=admin_email_, \
                     otp=otp_, event_name=event_name_, event_description=event_description_, \
-                    ending_time_delta=ending_time_delta_, location_range=location_range_)
+                    ending_time_delta=ending_time_delta_, location_range=location_range_, \
+                    latitude=latitude_, longitude=longitude_, broadcast_choice=broadcast_choice_)
 
             db.session.add(new_event)
             db.session.commit()
@@ -289,9 +298,35 @@ def attendence_post():
         }
         return make_response(jsonify(payLoad), 404)
 
-    # workleft: In api take latitude and longitude of user and then
-    # compare it with admins lat and long and judge on distance param
-    status_ = 1 # code logic needed here
+    try: # Integer, else error thrown from distance function
+        user_latitude = request.json.get('latitude')
+        user_longitude = request.json.get('longitude')
+        assert type(user_latitude)==type(float()) or type(user_latitude)==type(int())
+        assert type(user_longitude)==type(float()) or type(user_longitude)==type(int())
+    except:
+        user_latitude = None
+        user_longitude = None
+
+    admin_latitude = Events.query.filter_by(otp = event_otp_).first().latitude
+    admin_longitude = Events.query.filter_by(otp = event_otp_).first().longitude
+    location_range_ = Events.query.filter_by(otp = event_otp_).first().location_range
+
+    if location_range_==-1 or admin_latitude==-1.1 or admin_longitude==-1.1: # Lat and Long failed to come or Distance Range not given
+        distance_ = 10
+        location_range_ = 0
+    else:
+        if user_latitude==None or user_longitude==None:
+            location_range_=-1
+            distance_ = 10
+            location_range_ = 0
+        else:
+            distance_ = distance([user_latitude, user_longitude], [admin_latitude, admin_longitude])
+
+    if distance_>location_range_:
+        status_ = 0
+    else:
+        status_ = 1 
+
     try:
         event_id_ = Events.query.filter_by(otp = event_otp_).first().id
         new_attendence = Attendence(event_id=event_id_, event_otp=event_otp_, email=email_, \

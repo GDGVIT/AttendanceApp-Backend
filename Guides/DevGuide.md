@@ -23,10 +23,6 @@ or server takes request don't add to db and sends a message Attendence is closed
 - fetch creation_date and time_delta then before adding see if valid.
 - An API to give a few otp examples which are available
 
-## To be done
-
-- so much cleaning and filtering and purifying
-
 ## Not doing (Improvements/edge-bug)
 
 - replace flask-jwt with flask-jwt-extended
@@ -36,3 +32,6 @@ or server takes request don't add to db and sends a message Attendence is closed
 - check bugs for sockets
 - jwt token expiry thing api
 - make use of make_response, to add status code as well along with jsonify return in sockets
+- add distance field in Attendence Model
+- handle socket exceptions, use get for dict and seal with catch blocks
+- attendence route is handling error but very less informatic to client, can be improved
