@@ -8,6 +8,7 @@ flask-marshmallow==0.10.1
 Flask-SocketIO==4.2.1
 Flask-SQLAlchemy==2.4.1
 greenlet==0.4.15
+gunicorn==20.0.4
 itsdangerous==1.1.0
 Jinja2==2.10.3
 MarkupSafe==1.1.1
