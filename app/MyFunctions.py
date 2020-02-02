@@ -96,10 +96,15 @@ def user_info(token):
     resp = decode_auth_token(auth_token)
     if not isinstance(resp, str):
         user = Users.query.filter_by(id=resp).first()
-        return {
-            'id':user.id,
-            'email':user.email,
-            'username':user.username,
-            'admin':user.admin_status
-        }
+        
+        try: # suppose a user is deleted, then token is valid, and thus request reaches here and then error as no id for deleted user
+            return {
+                'id':user.id,
+                'email':user.email,
+                'username':user.username,
+                'admin':user.admin_status
+            }
+        except:
+            return 'AuthFail'
+
     return 'AuthFail' #This should have been changed to dict type
