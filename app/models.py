@@ -30,6 +30,7 @@ from sqlalchemy import (
 )
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_bcrypt import Bcrypt
 from os import environ
 
 
@@ -50,6 +51,8 @@ db = SQLAlchemy(app)
 
 ma = Marshmallow(app)
 
+bcrypt = Bcrypt(app)
+
 socketio = SocketIO(app, cors_allowed_origins='*')
 
 
@@ -62,7 +65,7 @@ class Users(db.Model):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
     username = Column(String(50))
-    password = Column(String(100))
+    password = Column(String(100)) #bcrypt storage needs 60 size
     email = Column(String(60), unique=True)
     admin_status = Column(Boolean, nullable=False, default=0)
  

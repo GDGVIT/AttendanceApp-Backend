@@ -15,6 +15,7 @@ def user_signup():
 
     username=request.json['username']
     password = request.json['password']
+    password = bcrypt.generate_password_hash(password).decode() # hashed, better than SHA1
     email=request.json['email']
 
     email_check = Users.query.filter_by(email=email).first()
@@ -71,7 +72,7 @@ def user_login():
     try:
         user = Users.query.filter_by(email=request.json['email']).first()
 
-        if password == user.password:
+        if bcrypt.check_password_hash(user.password, password):   #password == user.password
             auth_token = encode_auth_token(user.id)
             payLoad = {
                 'status':'success',

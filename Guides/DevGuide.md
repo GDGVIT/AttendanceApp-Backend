@@ -26,10 +26,6 @@ or server takes request don't add to db and sends a message Attendence is closed
 ## To be done
 
 - so much cleaning and filtering and purifying
-- use bcrypt to genrate and store passwords in hashes only-
-  - signup, create and commit in database
-  - login, check
-- from passlib.hash import pbkdf2_sha256 as sha256
 
 ## Not doing (Improvements/edge-bug)
 
