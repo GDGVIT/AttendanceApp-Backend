@@ -6,6 +6,9 @@ from .MyFunctions import *
 from .schemas import *
 from .sockets import *
 
+@app.route('/', methods=['GET', 'POST'])
+def testing_purpose():
+    return "<h1> Hi </h1>"
 
 # user signup
 @app.route('/user/signup', methods=['POST'])
