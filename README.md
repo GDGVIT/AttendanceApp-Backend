@@ -49,12 +49,12 @@
 ```
   - set SecretKey
 ```
-    export STRIPE_API_KEY=12345
+    export STRIPE_API_KEY="12345"
 ```
   - create Database
 ```
     python
-    from app import db
+    from app import *
     db.create_all()
 ```
 

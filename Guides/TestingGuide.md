@@ -15,7 +15,7 @@
 - create Database
 ```
     python
-    from app import db
+    from app import *
     db.create_all()
 ```
 - start app
