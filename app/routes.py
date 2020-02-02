@@ -68,8 +68,18 @@ def user_login():
 
     email=request.json['email']
     password=request.json['password']
-    
+
+    email_exsist = Users.query.filter_by(email=email).first()
+
     try:
+        if email_exsist==None:
+            payLoad = {
+                'status': 'fail',
+                'message': 'User does not exsist',
+                'auth_token':''
+            }
+            return make_response(jsonify(payLoad), 404)
+
         user = Users.query.filter_by(email=request.json['email']).first()
 
         if bcrypt.check_password_hash(user.password, password):   #password == user.password
@@ -80,10 +90,18 @@ def user_login():
                 'auth_token':auth_token.decode()
             }
             return make_response(jsonify(payLoad), 200)
+        else:
+            payLoad = {
+                'status': 'fail',
+                'message': 'Wrong Credentials! Check Again.',
+                'auth_token':''
+            }
+            return make_response(jsonify(payLoad), 401)
     except Exception as e:
         payLoad = {
             'status': 'fail',
-            'message': 'Wrong Credentials! Check Again.'
+            'message': 'Wrong Credentials! Check Again.',
+            'auth_token':''
         }
         return make_response(jsonify(payLoad), 401)
 
