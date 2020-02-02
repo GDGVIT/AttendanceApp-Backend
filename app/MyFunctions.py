@@ -56,10 +56,7 @@ def encode_auth_token(user_id):
             app.config.get('SECRET_KEY'),
             algorithm='HS256'
         )
-    except Exception as e:
-        debug(e)
-        debug(user_id)
-        debug(app.config.get('SECRET_KEY'))
+    except Exception as e: # Make sure secret key is set in environment, else NoneType ValueError
         return e
 
 
