@@ -1,8 +1,6 @@
 from .__init__ import *
 
-
 from .MyFunctions import *
-# from .models import *
 from .schemas import *
 from .routes import *
 
@@ -120,11 +118,11 @@ def take_attendence_from_user(json_):
             try:
                 event = Events.query.filter_by(otp=otp_).first()
                 event_name_ = event.event_name
-                admin_name_ = event.admin_name
+                admin_email_ = event.admin_email
                 attendence_status = 'Success' # This param is for admin only
             except:
                 event_name_ = ''
-                admin_name_ = ''
+                admin_email_ = ''
                 otp_ = -1
                 attendence_status = 'Failure' # This param is for admin only
             
@@ -134,7 +132,7 @@ def take_attendence_from_user(json_):
                 'datetime':str(datetime_),
                 'status': attendence_status,
                 'event_name':event_name_,
-                'admin_name':admin_name_,
+                'admin_email':admin_email_,
                 'otp':otp_
             }
             emit('admin_listen', json.dumps(payLoad), namespace='/admin_namespace')
@@ -147,7 +145,7 @@ def take_attendence_from_user(json_):
             'datetime':str(datetime.datetime.now()),
             'status': 'Failure',
             'event_name':'',
-            'admin_name':'',
+            'admin_email':'',
             'otp':-1
         }
         emit('admin_listen', json.dumps(payLoad), namespace='/admin_namespace')

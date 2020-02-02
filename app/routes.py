@@ -1,10 +1,9 @@
 from .__init__ import *
 
-
 from .MyFunctions import *
-# from .models import *
 from .schemas import *
 from .sockets import *
+
 
 @app.route('/', methods=['GET', 'POST'])
 def testing_purpose():
@@ -39,7 +38,7 @@ def user_signup():
 
     try:
         TokenValue = auth_token.decode()
-    except: # TypeError object has no attribute Token
+    except Exception as e: # TypeError object has no attribute Token
         return jsonify({
         'username':username,
         'password':password,
@@ -221,7 +220,7 @@ def create_event():
 
     if user_details != 'AuthFail' and admin_status_:
         creation_date_ = datetime.datetime.now()
-        admin_name_ = user_details.get("username")
+        admin_email_ = user_details.get("email")
 
         otp_ = request.json['otp']
         event_name_ = request.json['event_name']
@@ -239,7 +238,7 @@ def create_event():
             return make_response(jsonify(payLoad), 400)
         
         else:  
-            new_event = Events(creation_date= creation_date_, admin_name=admin_name_, \
+            new_event = Events(creation_date= creation_date_, admin_email=admin_email_, \
                     otp=otp_, event_name=event_name_, event_description=event_description_, \
                     ending_time_delta=ending_time_delta_, location_range=location_range_)
 

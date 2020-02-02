@@ -1,9 +1,6 @@
 from .__init__ import *
 
 
-# from .models import *
-
-
 # Distance Calculator
 def distance(origin, destination):
 

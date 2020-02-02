@@ -10,7 +10,7 @@
 ```
 - set SecretKey
 ```
-    export STRIPE_API_KEY=12345
+    export STRIPE_API_KEY="12345"
 ```
 - create Database
 ```

@@ -82,7 +82,8 @@ class Events(db.Model):
     __tablename__ = "events"
     id = Column(Integer, primary_key=True)
     creation_date = Column(DateTime)
-    admin_name = Column(String(50))
+    #admin_name = Column(String(50)) Remove it!
+    admin_email = Column(String(60))
     attendence = db.relationship(
         'Attendence', backref='event', lazy=True)
     # These are the required fields in post request
