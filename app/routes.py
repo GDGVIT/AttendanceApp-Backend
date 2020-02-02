@@ -20,14 +20,15 @@ def user_signup():
     email_check = Users.query.filter_by(email=email).first()
 
     if email_check:
-        return jsonify({
+        payLoad = {
             'username':'',
             'password':'',
             'email':'',
             'admin_status':0,
             'jwt':'',
             'status':'User Already Exsists'
-        })
+        }
+        return make_response(jsonify(payLoad), 208)
 
     new_user = Users(username, password, email)
     db.session.add(new_user)
@@ -39,23 +40,25 @@ def user_signup():
     try:
         TokenValue = auth_token.decode()
     except Exception as e: # TypeError object has no attribute Token
-        return jsonify({
+        payLoad = {
         'username':username,
         'password':password,
         'email':email,
         'admin_status':0,
         'jwt':'',
         'status':"Failed to generate Token"
-        })
+        }
+        return make_response(jsonify(payLoad), 500)
 
-    return jsonify({
+    payLoad = {
         'username':username,
         'password':password,
         'email':email,
         'admin_status':0,
         'jwt':TokenValue,
         'status':"User Created Successfully"
-    })
+    }
+    return make_response(jsonify(payLoad), 200)
 
 
 # user login
@@ -70,16 +73,18 @@ def user_login():
 
         if password == user.password:
             auth_token = encode_auth_token(user.id)
-            return jsonify({
+            payLoad = {
                 'status':'success',
                 'message':'Successfully logged in',
                 'auth_token':auth_token.decode()
-            })
+            }
+            return make_response(jsonify(payLoad), 200)
     except Exception as e:
-        return jsonify({
+        payLoad = {
             'status': 'fail',
             'message': 'Wrong Credentials! Check Again.'
-        })
+        }
+        return make_response(jsonify(payLoad), 401)
 
 
 # This is for testing, it may not be needed
@@ -98,7 +103,7 @@ def user_logged():
         resp = decode_auth_token(auth_token)
         if not isinstance(resp, str):
             user = Users.query.filter_by(id=resp).first()
-            return jsonify({
+            payLoad = {
                 'status': 'success',
                 'data': {
                     'id': user.id,
@@ -106,16 +111,19 @@ def user_logged():
                     'name': user.username,
                     'admin_status': user.admin_status
                 }
-            })
-        return jsonify({
+            }
+            return make_response(jsonify(payLoad), 200)
+        payLoad = {
             'status':'Fail',
             'message':resp
-        })
+        }
+        return make_response(jsonify(payLoad), 400)
     else:
-        return jsonify({
+        payLoad = {
             'status': 'fail',
             'message': 'Provide a valid auth token.'
-        })
+        }
+        return make_response(jsonify(payLoad), 400)
 
 
 

@@ -29,12 +29,7 @@ or server takes request don't add to db and sends a message Attendence is closed
 - use bcrypt to genrate and store passwords in hashes only-
   - signup, create and commit in database
   - login, check
-- make use of make_response, to add status code as well along with jsonify return
 - from passlib.hash import pbkdf2_sha256 as sha256
-
-## model changes
-
-- add field admin_email in events model
 
 ## Not doing (Improvements/edge-bug)
 
@@ -44,7 +39,4 @@ or server takes request don't add to db and sends a message Attendence is closed
 - clean datetime.datetime.now()
 - check bugs for sockets
 - jwt token expiry thing api
-- add field admin_email in events model
-- add admin_email field in sockets attendence_namespace payLoad for admin
-- In Events table, admin name is used, can be either made unique during /
-registration or make it admin email. Ask?
+- make use of make_response, to add status code as well along with jsonify return in sockets
