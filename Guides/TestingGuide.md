@@ -12,6 +12,10 @@
 ```
     export STRIPE_API_KEY=12345
 ```
+- set to debug mode (optional)
+```
+    export FLASK_ENV=development
+```
 - create Database
 ```
     python
