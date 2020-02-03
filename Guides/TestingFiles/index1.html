@@ -1,3 +1,4 @@
+<!-- This is index.html as a different user -->
 <html>
     <head>
     <title>Chat Room</title>
@@ -14,7 +15,7 @@
         var socket_rooms = io('https://painhost99.herokuapp.com/rooms_namespace')
     
         $('#attendence_button').on('click', function() {
-            socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzMDE5NDEsImlhdCI6MTU4MDc2NTkzNiwic3ViIjoyfQ.Czy0KirBS5ObW5anHHgufJcRK9NR_E_6zAe1azUywcE'});
+            socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzMDIwMDMsImlhdCI6MTU4MDc2NTk5OCwic3ViIjoxfQ.AqjP-lcEdryQR4Z4j-7DFUMbmxphAGwPbVRiTiNP-RY'});
             $('#myMessage').val('');
         });
 
