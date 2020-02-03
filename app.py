@@ -8,5 +8,10 @@ from app.routes import *
 from app.sockets import *
 
 
+port=os.environ.get("PORT")
+
+if port is None or port == "":
+    port = 3000
+
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(host='0.0.0.0', port=port, app)
