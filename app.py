@@ -14,4 +14,4 @@ if port is None or port == "":
     port = 3000
 
 if __name__ == '__main__':
-    socketio.run(host='0.0.0.0', port=port, app)
+    socketio.run(app, host='0.0.0.0', port=port)
