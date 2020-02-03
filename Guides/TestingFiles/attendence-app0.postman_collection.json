@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\":\"kush\",\n\t\"password\":\"123456\",\n\t\"email\":\"mail@mail\"\n}",
+					"raw": "{\n\t\"username\":\"ubaid\",\n\t\"password\":\"123456\",\n\t\"email\":\"mail@mail1\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -27,7 +27,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/user/signup?username=kush&password=123456&email=mail@mail1",
+					"raw": "http://127.0.0.1:5000/user/signup",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -39,20 +39,6 @@
 					"path": [
 						"user",
 						"signup"
-					],
-					"query": [
-						{
-							"key": "username",
-							"value": "kush"
-						},
-						{
-							"key": "password",
-							"value": "123456"
-						},
-						{
-							"key": "email",
-							"value": "mail@mail1"
-						}
 					]
 				},
 				"description": "Here user do signup"
@@ -63,7 +49,13 @@
 			"name": "http://127.0.0.1:5000/users",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIyMTM0NzksImlhdCI6MTU4MDY3NzQ3NCwic3ViIjoxfQ.cCLI6wvh7v6txFRqjQMs-epVYjFReWuNLYIap__sjyw",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "http://127.0.0.1:5000/users",
 					"protocol": "http",
@@ -134,8 +126,9 @@
 				"method": "POST",
 				"header": [
 					{
+						"warning": "Value contains invalid newline characters.",
 						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTE2Mzc2NDksImlhdCI6MTU4MDEwMTY0NCwic3ViIjoxfQ.QkM-DsJR0yuVbSL-ElkQeHG0xYPpF_BrA-lJhi8MZqk",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIxMjYyMjQsImlhdCI6MTU4MDU5MDIxOSwic3ViIjoyfQ.w6Ax2B0jXzyElFv7B1B3YWl75I5KkDylrR9BW2sc6Dw",
 						"type": "text"
 					},
 					{
@@ -186,13 +179,13 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTE2MDQyNTksImlhdCI6MTU4MDA2ODI1NCwic3ViIjoxfQ.pFxvZSd8YqzEykuOOGM5aZKhArJBYW1LFTsjd4JgWx4",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIyMTM0NzksImlhdCI6MTU4MDY3NzQ3NCwic3ViIjoxfQ.cCLI6wvh7v6txFRqjQMs-epVYjFReWuNLYIap__sjyw",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"otp\":\"123456\",\n\t\"event_name\":\"fun event\",\n\t\"event_description\":\"It is a fun event where everyone is suppossed to enjoy\",\n\t\"ending_time_delta\":15,\n\t\"location_range\":100\n}",
+					"raw": "{\n\t\"otp\":\"4\",\n\t\"event_name\":\"fun event\",\n\t\"event_description\":\"It is a fun event where everyone is suppossed to enjoy\",\n\t\"ending_time_delta\":15,\n\t\"location_range\":100,\n\t\"latitude\":100,\n\t\"longitude\":100,\n\t\"broadcast_choice\":1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -231,13 +224,13 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTE2MDQyNTksImlhdCI6MTU4MDA2ODI1NCwic3ViIjoxfQ.pFxvZSd8YqzEykuOOGM5aZKhArJBYW1LFTsjd4JgWx4",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIyMTUwNTMsImlhdCI6MTU4MDY3OTA0OCwic3ViIjoxfQ.t1tX_auF3n6NlSBeBwK96ukrMXbkPtaOL8dNi-YtJLg",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"event_otp\":\"123456\"\n}",
+					"raw": "{\n\t\"event_otp\":\"2\",\n\t\"latitude\":100,\n\t\"longitude\":100.0001\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -259,6 +252,36 @@
 					]
 				},
 				"description": "Giving Attendence. This endpoint is not needed but for test purposes."
+			},
+			"response": []
+		},
+		{
+			"name": "http://127.0.0.1:5000/users/2",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIyMTM0NzksImlhdCI6MTU4MDY3NzQ3NCwic3ViIjoxfQ.cCLI6wvh7v6txFRqjQMs-epVYjFReWuNLYIap__sjyw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:5000/users/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"2"
+					]
+				},
+				"description": "get user by id"
 			},
 			"response": []
 		}

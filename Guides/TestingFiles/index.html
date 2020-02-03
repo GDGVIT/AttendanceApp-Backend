@@ -1,4 +1,3 @@
-
 <html>
     <head>
     <title>Chat Room</title>
@@ -15,7 +14,7 @@
         var socket_rooms = io('http://127.0.0.1:5000/rooms_namespace')
     
         $('#attendence_button').on('click', function() {
-            socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTE2Mzc2NDksImlhdCI6MTU4MDEwMTY0NCwic3ViIjoxfQ.QkM-DsJR0yuVbSL-ElkQeHG0xYPpF_BrA-lJhi8MZqk'});
+            socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIyMDc2NzcsImlhdCI6MTU4MDY3MTY3Miwic3ViIjoyfQ.Hy5v3Ug8TS4qm2XVLsVV_locGgD-jOSBRDyAHzBhL50'});
             $('#myMessage').val('');
         });
 
