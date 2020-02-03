@@ -18,7 +18,7 @@
 [![GitHub pull-requests](https://img.shields.io/github/issues-pr/GDGVIT/AttendanceApp-Backend.svg)](https://GitHub.com/GDGVIT/AttendanceApp-Backend/pull/) [![GitHub pull-requests closed](https://img.shields.io/github/issues-pr-closed/GDGVIT/AttendanceApp-Backend.svg)](https://GitHub.com/GDGVIT/AttendanceApp-Backend/pull/)
 </br>
 [![DOCS](https://img.shields.io/badge/Documentation-postman%20docs-green?style=flat-square&logo=appveyor)](https://documenter.getpostman.com/view/9118595/SWTBfJAv)
-[![DOCS](https://img.shields.io/badge/Documentation-Testing%20Guide-green?style=flat-square&logo=appveyor)](https://github.com/D-E-F-E-A-T/AttendanceApp-Backend/blob/factored_code_beta/Guides/TestingGuide.md)
+[![DOCS](https://img.shields.io/badge/Documentation-Testing%20Guide-green?style=flat-square&logo=appveyor)](https://github.com/D-E-F-E-A-T/AttendanceApp-Backend/blob/master/Guides/TestingGuide.md)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 [![HitCount](http://hits.dwyl.io/D-E-F-E-A-T/AttendanceApp-Backend.svg)](http://hits.dwyl.io/D-E-F-E-A-T/AttendanceApp-Backend)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/GDGVIT/AttendanceApp-Backend)
