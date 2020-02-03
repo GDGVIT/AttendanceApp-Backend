@@ -301,9 +301,22 @@ def attendence_post():
 
     # event exsists -done
     # user authorized -done
+    datetime_ = datetime.datetime.now()
 
     event_otp_ = request.json.get('event_otp')
-    datetime_ = datetime.datetime.now()
+    try:
+        event_check = Events.query.filter_by(otp=event_otp_).first()
+        if event_check == None:
+            raise ValueError('Abe saale')
+    except: # Event doesn't exsists
+        payLoad = {
+            "event_otp":event_otp_,
+            "email":'', # Suppose if email failure, then again a new check. So better not returning it.
+            "datetime":datetime_,
+            "status":0
+        }
+        return make_response(jsonify(payLoad), 404)
+
     try:
         email_ = user_info(request.headers.get('Authorization')).get("email")
     except: # User Doesn't exsist.

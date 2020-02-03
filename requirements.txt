@@ -10,4 +10,3 @@ gunicorn
 flask-bcrypt
 flask-heroku
 SQLAlchemy
-psycopg2
