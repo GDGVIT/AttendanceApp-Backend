@@ -41,8 +41,14 @@ def debug(msg):
 app = Flask(__name__)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
-    os.path.join(basedir, 'db.sqlite')
+PG = os.environ.get("DATABASE_URL")
+
+if PG is None or PG=="":
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + \
+        os.path.join(basedir, 'db.sqlite')
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = PG
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = environ.get('STRIPE_API_KEY')
 
