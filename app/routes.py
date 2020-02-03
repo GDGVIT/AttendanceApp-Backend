@@ -4,6 +4,11 @@ from .MyFunctions import *
 from .schemas import *
 from .sockets import *
 
+# # internal
+import io
+import csv
+import flask_excel as excel
+
 
 @app.route('/', methods=['GET', 'POST'])
 def testing_purpose():
@@ -447,3 +452,40 @@ def attendence_update(email):
             'Reason':'AuthFail'
         }
         return make_response(jsonify(payLoad), 401)
+
+
+# Download CSV file for Event Attendenes (Event Report Generation)
+@app.route('/download/<otp>')
+def report_generation(otp):
+
+    try:
+        event_list = Attendence.query.filter_by(event_otp=otp).all()
+        event_name = Events.query.filter_by(otp=otp).first().event_name
+        event_name = event_name.replace(' ', '-')
+
+        csv_list = [['id',
+            'email',
+            'datetime',
+            'status',
+            ]]
+
+        for each in event_list:
+            
+            csv_list.append([each.id, 
+                each.email, 
+                each.datetime,
+                each.status,
+                ])
+
+        si = io.StringIO()
+        cw = csv.writer(si)
+        cw.writerows(csv_list)
+        output = make_response(si.getvalue())
+        output.headers["Content-Disposition"] = "attachment; filename={}.csv".format(event_name)
+        output.headers["Content-type"] = "text/csv"
+        return output
+    except: # Incorrect Event-OTP
+        payLoad = {
+            'Message': 'Incorrect Event OTP'
+        }
+        return make_response(jsonify(payLoad), 400) 
