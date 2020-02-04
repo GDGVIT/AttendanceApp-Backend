@@ -20,7 +20,7 @@ attendence is emitted to:
 or server takes request don't add to db and sends a message Attendence is closed now.
 - fetch creation_date and time_delta then before adding see if valid.
 - An API to give a few otp examples which are available
-- Route for all the events detail (admin)
+- check otp size
 
 ## Not doing (Improvements/edge-bug)
 

@@ -158,8 +158,15 @@ def user_view():
     """
     return: detail of all registered users
     """
-    auth_header = request.headers.get('Authorization')
-    user_detail = user_info(auth_header)
+    try:
+        auth_header = request.headers.get('Authorization')
+        user_detail = user_info(auth_header)
+    except:
+        payLoad = {
+            'Status':'Fail',
+            'Reason':'Failed to Resolve Token'
+        }
+        return make_response(jsonify(payLoad), 400)
 
     if user_detail != 'AuthFail':
 
@@ -192,8 +199,15 @@ def single_user_view(id):
     """
     return: detail of user for provided <id>
     """
-    auth_header = request.headers.get('Authorization')
-    user_detail = user_info(auth_header)
+    try:
+        auth_header = request.headers.get('Authorization')
+        user_detail = user_info(auth_header)
+    except:
+        payLoad = {
+            'Status':'Fail',
+            'Reason':'Failed to Resolve Token'
+        }
+        return make_response(jsonify(payLoad), 400)
 
     if user_detail != 'AuthFail':
 
@@ -488,3 +502,102 @@ def report_generation(otp):
             'Message': 'Incorrect Event OTP'
         }
         return make_response(jsonify(payLoad), 400)
+
+
+# Events Info API (Admin)
+
+@app.route('/events/info', methods=['GET'])
+def events_info():
+
+    # Pass JWT Token in Header
+    """
+    :return: detail of all Events
+    """
+    try:
+        auth_header = request.headers.get('Authorization')
+        user_detail = user_info(auth_header)
+    except:
+        payLoad = {
+            'Status':'Fail',
+            'Reason':'Failed to Resolve Token'
+        }
+        return make_response(jsonify(payLoad), 400)
+
+    if user_detail != 'AuthFail':
+
+        if user_detail.get('admin'): # NoneType | 0| 1
+            all_events = Events.query.all() # Here Error if no Event
+            result = events_schema.dump(all_events)
+            payLoad = result
+            return make_response(jsonify(payLoad), 200)
+        
+        elif user_detail.get('admin') == 0:
+            payLoad = {
+                'Status':'Fail',
+                'Reason':'Not Admin'
+            }
+            return make_response(jsonify(payLoad), 403)
+
+    else:
+        payLoad = {
+            'Status':'Fail',
+            'Reason':'AuthFail'
+        }
+        return make_response(jsonify(payLoad), 401)
+
+
+# Event Info API (Admin)
+
+@app.route('/events/info/<otp>', methods=['GET'])
+def event_info(otp):
+
+    # Pass JWT Token in Header
+    """
+    return: detail of event for provided <otp>
+    """
+    try:
+        auth_header = request.headers.get('Authorization')
+        user_detail = user_info(auth_header)
+    except:
+        payLoad = {
+            'Status':'Fail',
+            'Reason':'Failed to Resolve Token'
+        }
+        return make_response(jsonify(payLoad), 400)
+    
+    if user_detail != 'AuthFail':
+
+        try:
+            if user_detail.get('admin'): # NoneType | 0| 1
+                event = Events.query.filter_by(otp=otp).first() # Here No Error if Event not present
+                
+                if event==None:
+                    payLoad = {
+                        'Status':'Fail',
+                        'Reason':'Event Not Found'
+                    }
+                    return make_response(jsonify(payLoad), 404)
+
+                result = event_schema.dump(event)
+                payLoad = result
+                return make_response(jsonify(payLoad), 200)
+        
+            elif user_detail.get('admin') == 0:
+                payLoad = {
+                    'Status':'Fail',
+                    'Reason':'Not Admin'
+                }
+                return make_response(jsonify(payLoad), 403)
+        except:
+            payLoad = {
+                'Status':'Fail',
+                'Reason':'Server Error'
+            }
+            return make_response(jsonify(payLoad), 500)
+    
+    else:
+        payLoad = {
+            'Status':'Fail',
+            'Reason':'AuthFail'
+        }
+        return make_response(jsonify(payLoad), 401)
