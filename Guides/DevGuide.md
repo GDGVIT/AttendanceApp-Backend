@@ -19,7 +19,6 @@ attendence is emitted to:
 - Time check, before attendence verify it's in allowed time limit. Or frontend takes care of this and don't send vague requests \
 or server takes request don't add to db and sends a message Attendence is closed now.
 - fetch creation_date and time_delta then before adding see if valid.
-- An API to give a few otp examples which are available
 
 ## Not doing (Improvements/edge-bug)
 

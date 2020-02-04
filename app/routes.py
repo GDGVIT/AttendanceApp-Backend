@@ -616,3 +616,71 @@ def event_info(otp):
             'Reason':'AuthFail'
         }
         return make_response(jsonify(payLoad), 401)
+
+
+# Random Valid OTP Generator
+
+@app.route('/random/otp', methods=['GET'])
+def random_otp():
+
+    # Pass JWT Token in Header
+    """
+    :return: detail of all Events
+    """
+    try:
+        auth_header = request.headers.get('Authorization')
+        user_detail = user_info(auth_header)
+    except:
+        payLoad = {
+            'Status':'Fail',
+            'Reason':'Failed to Resolve Token'
+        }
+        return make_response(jsonify(payLoad), 400)
+    
+    try:
+        if user_detail != 'AuthFail':
+
+            if user_detail.get('admin'): # NoneType | 0| 1
+                all_events = Events.query.all() # Here Error if no Event
+                used_otps = set()
+                for otp_ in all_events:
+                    used_otps.add(str(otp_.otp))
+                
+                total_otps = set()
+                available_otps = set()
+                for otp_ in range(0, 999999+1):
+                    otp = str(otp_)
+                    if len(otp)!=6:
+                        diff = 6-len(otp)
+                        otp = '0'*diff + otp
+                    total_otps.add(otp)
+
+                    available_otps = total_otps - used_otps
+                    if len(available_otps) == 3:
+                        break
+                payLoad = {
+                        "otp1": available_otps.pop(),
+                        "otp2": available_otps.pop(),
+                        "otp3": available_otps.pop()
+                } 
+                return make_response(jsonify(payLoad), 200)
+            
+            elif user_detail.get('admin') == 0:
+                payLoad = {
+                    'Status':'Fail',
+                    'Reason':'Not Admin'
+                }
+                return make_response(jsonify(payLoad), 403)
+
+        else:
+            payLoad = {
+                'Status':'Fail',
+                'Reason':'AuthFail'
+            }
+            return make_response(jsonify(payLoad), 401)
+    except:
+            payLoad = {
+                'Status':'Fail',
+                'Reason':'Server Failure'
+            }
+            return make_response(jsonify(payLoad), 500)
