@@ -267,14 +267,29 @@ def create_event():
         creation_date_ = datetime.datetime.now()
         admin_email_ = user_details.get("email")
 
-        otp_ = request.json['otp']
-        event_name_ = request.json['event_name']
-        event_description_ = request.json['event_description']
-        ending_time_delta_ = request.json['ending_time_delta']
-        location_range_ = request.json.get('location_range')
-        latitude_ = request.json.get('latitude')
-        longitude_ = request.json.get('longitude')
-        broadcast_choice_ = request.json.get('broadcast_choice')
+        otp_ = request.json.get('otp')
+
+        if len(otp_)!=6:
+            payLoad = {
+                'Status': 'Fail',
+                'Reason': 'OTP Size Constrain'
+            }
+            return make_response(jsonify(payLoad), 406)
+
+        try:
+            event_name_ = request.json['event_name']
+            event_description_ = request.json['event_description']
+            ending_time_delta_ = request.json['ending_time_delta']
+            location_range_ = request.json.get('location_range')
+            latitude_ = request.json.get('latitude')
+            longitude_ = request.json.get('longitude')
+            broadcast_choice_ = request.json.get('broadcast_choice')
+        except:
+            payLoad = {
+                'Status': 'Fail',
+                'Reason': 'Fill All Required Details'
+            }
+            return make_response(jsonify(payLoad), 400)
 
         if location_range_==None or latitude_==None or longitude_==None: # Measure to protect issues
             latitude_ = -1.1
