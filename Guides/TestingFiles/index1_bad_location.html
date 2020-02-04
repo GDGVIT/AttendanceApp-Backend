@@ -1,3 +1,5 @@
+<!-- Location is far from valid point -->
+
 <html>
     <head>
     <title>Chat Room</title>
@@ -14,7 +16,7 @@
         var socket_rooms = io('http://127.0.0.1:3000/rooms_namespace')
     
         $('#attendence_button').on('click', function() {
-            socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzNzk4MTIsImlhdCI6MTU4MDg0MzgwNywic3ViIjoxfQ.Nf9nZNSJOUEFbnDht4-cbmIcG09_ttocBmSos5sRwLQ', 'latitude':100, 'longitude':100.0001});
+            socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzNzk4MTIsImlhdCI6MTU4MDg0MzgwNywic3ViIjoxfQ.Nf9nZNSJOUEFbnDht4-cbmIcG09_ttocBmSos5sRwLQ', 'latitude':1000, 'longitude':100.0001});
             $('#myMessage').val('');
         });
 
