@@ -488,4 +488,4 @@ def report_generation(otp):
         payLoad = {
             'Message': 'Incorrect Event OTP'
         }
-        return make_response(jsonify(payLoad), 400) 
+        return make_response(jsonify(payLoad), 400)
