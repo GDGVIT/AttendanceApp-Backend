@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\":\"ubaid\",\n\t\"password\":\"123456\",\n\t\"email\":\"mail@mail1\"\n}",
+					"raw": "{\n\t\"username\":\"nirmit\",\n\t\"password\":\"123456\",\n\t\"email\":\"mail@mail9\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -27,15 +27,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/user/signup",
-					"protocol": "http",
+					"raw": "127.0.0.1:3000/user/signup",
 					"host": [
 						"127",
 						"0",
 						"0",
 						"1"
 					],
-					"port": "5000",
+					"port": "3000",
 					"path": [
 						"user",
 						"signup"
@@ -52,20 +51,19 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIyMTM0NzksImlhdCI6MTU4MDY3NzQ3NCwic3ViIjoxfQ.cCLI6wvh7v6txFRqjQMs-epVYjFReWuNLYIap__sjyw",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzNTkzMzksImlhdCI6MTU4MDgyMzMzNCwic3ViIjoxfQ.BhqcDSfP5KFRV4Mdk7I9pEyAGaDUMzgaGmXMapAFEX8",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://127.0.0.1:5000/users",
-					"protocol": "http",
+					"raw": "127.0.0.1:3000/users",
 					"host": [
 						"127",
 						"0",
 						"0",
 						"1"
 					],
-					"port": "5000",
+					"port": "3000",
 					"path": [
 						"users"
 					]
@@ -94,7 +92,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"email\": \"mail@mail\",\n    \"password\": \"123456\"\n}",
+					"raw": "{\n\t\"email\": \"mail@mail1\",\n    \"password\": \"123456\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -102,15 +100,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/user/login",
-					"protocol": "http",
+					"raw": "127.0.0.1:3000/user/login",
 					"host": [
 						"127",
 						"0",
 						"0",
 						"1"
 					],
-					"port": "5000",
+					"port": "3000",
 					"path": [
 						"user",
 						"login"
@@ -126,9 +123,8 @@
 				"method": "POST",
 				"header": [
 					{
-						"warning": "Value contains invalid newline characters.",
 						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIxMjYyMjQsImlhdCI6MTU4MDU5MDIxOSwic3ViIjoyfQ.w6Ax2B0jXzyElFv7B1B3YWl75I5KkDylrR9BW2sc6Dw",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzMDY5MzgsImlhdCI6MTU4MDc3MDkzMywic3ViIjoxfQ.JQH_YIbrBtKjUEHy7f201UY0tC6q95v2CRGUs-VFUTY",
 						"type": "text"
 					},
 					{
@@ -148,15 +144,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/user/logged",
-					"protocol": "http",
+					"raw": "127.0.0.1:3000/user/logged",
 					"host": [
 						"127",
 						"0",
 						"0",
 						"1"
 					],
-					"port": "5000",
+					"port": "3000",
 					"path": [
 						"user",
 						"logged"
@@ -179,13 +174,13 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIyMTM0NzksImlhdCI6MTU4MDY3NzQ3NCwic3ViIjoxfQ.cCLI6wvh7v6txFRqjQMs-epVYjFReWuNLYIap__sjyw",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzMDY5MzgsImlhdCI6MTU4MDc3MDkzMywic3ViIjoxfQ.JQH_YIbrBtKjUEHy7f201UY0tC6q95v2CRGUs-VFUTY",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"otp\":\"4\",\n\t\"event_name\":\"fun event\",\n\t\"event_description\":\"It is a fun event where everyone is suppossed to enjoy\",\n\t\"ending_time_delta\":15,\n\t\"location_range\":100,\n\t\"latitude\":100,\n\t\"longitude\":100,\n\t\"broadcast_choice\":1\n}",
+					"raw": "{\n\t\"otp\":\"000010\",\n\t\"event_name\":\"Kush Stand Up Comedy\",\n\t\"event_description\":\"It is a fun event where everyone is suppossed to enjoy\",\n\t\"ending_time_delta\":15,\n\t\"location_range\":100,\n\t\"latitude\":100,\n\t\"longitude\":100,\n\t\"broadcast_choice\":1\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -193,15 +188,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/event/create",
-					"protocol": "http",
+					"raw": "127.0.0.1:3000/event/create",
 					"host": [
 						"127",
 						"0",
 						"0",
 						"1"
 					],
-					"port": "5000",
+					"port": "3000",
 					"path": [
 						"event",
 						"create"
@@ -224,13 +218,13 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIyMTUwNTMsImlhdCI6MTU4MDY3OTA0OCwic3ViIjoxfQ.t1tX_auF3n6NlSBeBwK96ukrMXbkPtaOL8dNi-YtJLg",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzNzExODgsImlhdCI6MTU4MDgzNTE4Mywic3ViIjoxfQ.f6z-ZSeYxDM759rR4JvrLU_A3VjfYOv5cHOVPQ1hJCg",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"event_otp\":\"2\",\n\t\"latitude\":100,\n\t\"longitude\":100.0001\n}",
+					"raw": "{\n\t\"event_otp\":\"000003\",\n\t\"latitude\":100,\n\t\"longitude\":100.0001\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -238,15 +232,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/attendence",
-					"protocol": "http",
+					"raw": "127.0.0.1:3000/attendence",
 					"host": [
 						"127",
 						"0",
 						"0",
 						"1"
 					],
-					"port": "5000",
+					"port": "3000",
 					"path": [
 						"attendence"
 					]
@@ -262,26 +255,175 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIyMTM0NzksImlhdCI6MTU4MDY3NzQ3NCwic3ViIjoxfQ.cCLI6wvh7v6txFRqjQMs-epVYjFReWuNLYIap__sjyw",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzNTkzMzksImlhdCI6MTU4MDgyMzMzNCwic3ViIjoxfQ.BhqcDSfP5KFRV4Mdk7I9pEyAGaDUMzgaGmXMapAFEX8",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://127.0.0.1:5000/users/2",
-					"protocol": "http",
+					"raw": "127.0.0.1:3000/users/2",
 					"host": [
 						"127",
 						"0",
 						"0",
 						"1"
 					],
-					"port": "5000",
+					"port": "3000",
 					"path": [
 						"users",
 						"2"
 					]
 				},
 				"description": "get user by id"
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:3000/attendence/update/mail@mail",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzNzUwOTcsImlhdCI6MTU4MDgzOTA5Miwic3ViIjoxfQ.97O3MY7YSuPRGrZCprhjc2P65Qre0MBEBkUMmIlR5OA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"otp\":123456\n}"
+				},
+				"url": {
+					"raw": "127.0.0.1:3000/attendence/update/mail@mail",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"attendence",
+						"update",
+						"mail@mail"
+					]
+				},
+				"description": "Only Admin can access\nTo update someones attendance"
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:3000/download/123456",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:3000/download/123456",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"download",
+						"123456"
+					]
+				},
+				"description": "Only Admin\nDownload Report for any Event"
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:3000/events/info",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzNTkzMzksImlhdCI6MTU4MDgyMzMzNCwic3ViIjoxfQ.BhqcDSfP5KFRV4Mdk7I9pEyAGaDUMzgaGmXMapAFEX8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/events/info",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"events",
+						"info"
+					]
+				},
+				"description": "Only Admin\n\nEvents Info"
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:3000/events/info/123456",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzNTkzMzksImlhdCI6MTU4MDgyMzMzNCwic3ViIjoxfQ.BhqcDSfP5KFRV4Mdk7I9pEyAGaDUMzgaGmXMapAFEX8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/events/info/123456",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"events",
+						"info",
+						"123456"
+					]
+				},
+				"description": "Only Admin\nSpecific Event Info"
+			},
+			"response": []
+		},
+		{
+			"name": "127.0.0.1:3000/random/otp",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzNjIwNjgsImlhdCI6MTU4MDgyNjA2Mywic3ViIjoxfQ.Onx4EbcLi9YFFLnM_chqdNmCpl8HWO2T6kBhlQcixx8",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:3000/random/otp",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"random",
+						"otp"
+					]
+				},
+				"description": "Random OTP to help getting otps"
 			},
 			"response": []
 		}
