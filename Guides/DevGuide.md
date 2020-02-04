@@ -14,12 +14,6 @@ attendence is emitted to:
 - attendence_namespace-> attendence (to emit client attendence) :emits to the client side admin_namespace then
 - broadcaster_namespace -> attendence comes to this namespace also, from here it's sended to particular room
 
-## To be continued
-
-- Time check, before attendence verify it's in allowed time limit. Or frontend takes care of this and don't send vague requests \
-or server takes request don't add to db and sends a message Attendence is closed now.
-- fetch creation_date and time_delta then before adding see if valid.
-
 ## Not doing (Improvements/edge-bug)
 
 - replace flask-jwt with flask-jwt-extended
