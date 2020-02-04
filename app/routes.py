@@ -311,7 +311,7 @@ def attendence_post():
     try:
         event_check = Events.query.filter_by(otp=event_otp_).first()
         if event_check == None:
-            raise ValueError('Abe saale')
+            raise ValueError('No such Event Exsists')
     except: # Event doesn't exsists
         payLoad = {
             "event_otp":event_otp_,
