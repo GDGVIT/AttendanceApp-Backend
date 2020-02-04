@@ -7,6 +7,7 @@ from .sockets import *
 # internal
 import io
 import csv
+from datetime import timedelta
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -334,6 +335,7 @@ def attendence_post():
 
     # event exsists -done
     # user authorized -done
+    # InValid Time -done
     datetime_ = datetime.datetime.now()
 
     event_otp_ = request.json.get('event_otp')
@@ -392,6 +394,23 @@ def attendence_post():
         status_ = 1 
 
     try:
+        event_query = Events.query.filter_by(otp=event_otp_).first()
+
+        admin_datetime = event_query.creation_date
+        ending_time_delta_ = event_query.ending_time_delta
+        datetime_check = admin_datetime + timedelta(minutes=ending_time_delta_)
+
+        if datetime_ > datetime_check:
+            payLoad = {
+            "event_otp":event_otp_,
+            "email":email_,
+            "datetime":datetime_,
+            "status":0
+            }
+            return make_response(jsonify(payLoad), 423) # Attendence is locked down
+
+
+
         event_id_ = Events.query.filter_by(otp = event_otp_).first().id
         new_attendence = Attendence(event_id=event_id_, event_otp=event_otp_, email=email_, \
             datetime=datetime_, status=status_)
