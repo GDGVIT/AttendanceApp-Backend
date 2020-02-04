@@ -7,7 +7,6 @@ from .sockets import *
 # # internal
 import io
 import csv
-import flask_excel as excel
 
 
 @app.route('/', methods=['GET', 'POST'])
