@@ -14,6 +14,11 @@ attendence is emitted to:
 - attendence_namespace-> attendence (to emit client attendence) :emits to the client side admin_namespace then
 - broadcaster_namespace -> attendence comes to this namespace also, from here it's sended to particular room
 
+## ToBeDone
+
+- add status code to all sockets
+- make their pattern very much same
+
 ## Not doing (Improvements/edge-bug)
 
 - replace flask-jwt with flask-jwt-extended
@@ -28,3 +33,4 @@ attendence is emitted to:
 - Fix spelling of Attendance
 - When admin marks attendance, then ad a new filed to keep this record
 - login with gmail, linkden
+- generalize api returns
