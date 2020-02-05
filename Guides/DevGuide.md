@@ -30,3 +30,4 @@ attendence is emitted to:
 - login with gmail, linkden
 - generalize api returns
 - add status code to all sockets and make their pattern very much same
+- add recaptcha

@@ -151,7 +151,7 @@ def user_logged():
 
 
 
-# users view
+# users view (Admin)
 @app.route('/users', methods=['GET'])
 def user_view():
 
@@ -192,7 +192,7 @@ def user_view():
         return make_response(jsonify(payLoad), 401)
 
 
-# user view
+# user view (Admin)
 @app.route('/users/<id>', methods=['GET'])
 def single_user_view(id):
 
