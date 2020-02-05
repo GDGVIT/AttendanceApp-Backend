@@ -446,7 +446,7 @@ def attendence_update(email):
     # here we ignore whether event is going on or closed
     auth_header = request.headers.get('Authorization')
     user_detail = user_info(auth_header)
-
+    debug(user_detail)
     if user_detail != 'AuthFail':
 
         try:
@@ -486,10 +486,11 @@ def attendence_update(email):
                 }
                 return make_response(jsonify(payLoad), 403)
         
-        except:
+        except Exception as e:
             payLoad = {
                 'Status':'Fail',
-                'Reason':'ReCheck OTP and Email'
+                'Reason':'ReCheck OTP and Email',
+                'Message': str(e)
             }
             return make_response(jsonify(payLoad), 404)
 
