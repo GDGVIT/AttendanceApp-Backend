@@ -1,11 +1,9 @@
 <p align="center">
+
 	<img src="https://user-images.githubusercontent.com/30529572/72455010-fb38d400-37e7-11ea-9c1e-8cdeb5f5906e.png" />
 	<h2 align="center"> AttendanceApp-Backend  </h2>
-	<h4 align="center"> Backend for Real Time Attendence application, which supports mulitple events simultaneously with real time feedback to admin and different admins. It also consists of location feature to detect proxies and many other features. <h4>
+	<h4 align="center"> Progressive Web Application <h4>
 </p>
-	<h4 align="center"> This is not the complete backend, but all main issues are resolved. Work left is to create some more endpoints for admin, securing of routes and level based access. </h4>
-	<h4 align="center"> index.html and index2.html are to test sockets, run them along with server and test their. Keep your dev console open. All things are checked but do testify everything that you think can crash and create issue. Much of left work is written in code but you can create issue for the same. </h4>
-
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/) [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/D-E-F-E-A-T/) [![4U](https://forthebadge.com/images/badges/for-you.svg)](https://github.com/GDGVIT/)
 </br>
