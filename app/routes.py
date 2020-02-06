@@ -112,7 +112,7 @@ def user_login():
 
 
 # This is for testing, it may not be needed
-@app.route('/user/logged', methods=['POST'])
+@app.route('/user/logged', methods=['GET'])
 def user_logged():
 
     """
