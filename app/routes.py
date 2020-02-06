@@ -11,11 +11,13 @@ from datetime import timedelta
 
 
 @app.route('/', methods=['GET', 'POST'])
+@cross_origin(supports_credentials=True)
 def testing_purpose():
     return "<h1> Hi </h1>"
 
 # user signup
 @app.route('/user/signup', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def user_signup():
 
     username=request.json['username']
@@ -69,6 +71,7 @@ def user_signup():
 
 # user login
 @app.route('/user/login', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def user_login():
 
     email=request.json['email']
@@ -113,6 +116,7 @@ def user_login():
 
 # This is for testing, it may not be needed
 @app.route('/user/logged', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def user_logged():
 
     """
@@ -153,6 +157,7 @@ def user_logged():
 
 # users view (Admin)
 @app.route('/users', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def user_view():
 
     # Pass JWT Token in Header
@@ -194,6 +199,7 @@ def user_view():
 
 # user view (Admin)
 @app.route('/users/<id>', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def single_user_view(id):
 
     # Pass JWT Token in Header
@@ -249,6 +255,7 @@ def single_user_view(id):
 
 # create event
 @app.route('/event/create', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def create_event():
 
     """
@@ -328,6 +335,7 @@ def create_event():
 
 # API is not needed here. For Testing Purposes.
 @app.route('/attendence', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def attendence_post():
 
     # If status is 0 then treat it as not present and specify reason
@@ -440,6 +448,7 @@ def attendence_post():
 # because anyhow we are allowing user to put as many attendences on as they wish
 # on our sockets
 @app.route('/attendence/update/<email>', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def attendence_update(email):
 
     # otp, email
@@ -503,6 +512,7 @@ def attendence_update(email):
 
 # Download CSV file for Event Attendenes (Event Report Generation)
 @app.route('/download/<otp>')
+@cross_origin(supports_credentials=True)
 def report_generation(otp):
 
     try:
@@ -541,6 +551,7 @@ def report_generation(otp):
 # Events Info API (Admin)
 
 @app.route('/events/info', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def events_info():
 
     # Pass JWT Token in Header
@@ -583,6 +594,7 @@ def events_info():
 # Event Info API (Admin)
 
 @app.route('/events/info/<otp>', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def event_info(otp):
 
     # Pass JWT Token in Header
@@ -640,6 +652,7 @@ def event_info(otp):
 # Random Valid OTP Generator
 
 @app.route('/random/otp', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def random_otp():
 
     # Pass JWT Token in Header
@@ -707,6 +720,7 @@ def random_otp():
 
 # Google Auth Route
 @app.route("/login/google")
+@cross_origin(supports_credentials=True)
 def login():
 
     # Find out what URL to hit for Google login
@@ -722,8 +736,10 @@ def login():
     )
     return redirect(request_uri)
 
+
 # code will come here (Backend only)
 @app.route("/login/google/callback")
+@cross_origin(supports_credentials=True)
 def callback():
 
     # Get authorization code Google sent back to you

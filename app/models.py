@@ -34,6 +34,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_bcrypt import Bcrypt
 from os import environ
+from flask_cors import CORS, cross_origin
 
 
 def debug(msg):
@@ -41,6 +42,7 @@ def debug(msg):
 
 
 app = Flask(__name__)
+CORS(app, support_credentials=True)
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 PG = os.environ.get("DATABASE_URL")

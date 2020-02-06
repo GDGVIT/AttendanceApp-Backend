@@ -12,3 +12,4 @@ flask-heroku
 SQLAlchemy
 requests
 oauthlib
+flask-cors
