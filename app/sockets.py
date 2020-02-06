@@ -153,7 +153,6 @@ def take_attendence_from_user(json_):
                 for user in event_attendences:
                     if user.email == email_ and user.status in ['t', 'True', True, '1', 1]:
                         Reason='Attendence Already Given and Present'
-                        debug('yes')
                         StatusCode=400
                         payLoad = {
                             'Status':'Success',
