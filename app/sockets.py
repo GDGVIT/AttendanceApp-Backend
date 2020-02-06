@@ -146,20 +146,38 @@ def take_attendence_from_user(json_):
 
 
             elif status_==1:
-                Reason='Attendence updated'
-                StatusCode=200
 
-                new_attendence = Attendence(event_id=event_id_, event_otp=otp_, email=email_, \
-                    datetime=datetime_, status=status_)
-                db.session.add(new_attendence)
-                db.session.commit()
-                payLoad = {
-                    'Status':'Success',
-                    'Reason':Reason,
-                    'StatusCode':StatusCode
-                }
+                already_given = False
+                # Checking if user has already given attendence
+                event_attendences = Attendence.query.filter_by(event_otp=otp_).all()
+                for user in event_attendences:
+                    if user.email == email_ and user.status in ['t', 'True', True, '1', 1]:
+                        Reason='Attendence Already Given and Present'
+                        debug('yes')
+                        StatusCode=400
+                        payLoad = {
+                            'Status':'Success',
+                            'Reason':Reason,
+                            'StatusCode':StatusCode
+                        }
+                        already_given = True
+                        break
                 
-                allow_forward = 1
+                if not already_given:
+                    Reason='Attendence updated'
+                    StatusCode=200
+
+                    new_attendence = Attendence(event_id=event_id_, event_otp=otp_, email=email_, \
+                        datetime=datetime_, status=status_)
+                    db.session.add(new_attendence)
+                    db.session.commit()
+                    payLoad = {
+                        'Status':'Success',
+                        'Reason':Reason,
+                        'StatusCode':StatusCode
+                    }
+                    
+                    allow_forward = 1
 
             else:
                 Reason='Server Error'

@@ -411,15 +411,25 @@ def attendence_post():
 
         if datetime_ > datetime_check:
             payLoad = {
-            "event_otp":event_otp_,
-            "email":email_,
-            "datetime":datetime_,
-            "status":0
+                "event_otp":event_otp_,
+                "email":email_,
+                "datetime":datetime_,
+                "status":0
             }
             return make_response(jsonify(payLoad), 423) # Attendence is locked down
 
-
-
+        # Checking if user has already given attendance
+        event_attendences = Attendence.query.filter_by(event_otp=event_otp_).all()
+        for user in event_attendences:
+            if user.email == email_ and user.status in ['t', 'True', True, '1', 1]:
+                payLoad = {
+                    "event_otp":event_otp_,
+                    "email":email_,
+                    "datetime":datetime_,
+                    "status":0
+                }
+                return make_response(jsonify(payLoad), 400)
+            
         event_id_ = Events.query.filter_by(otp = event_otp_).first().id
         new_attendence = Attendence(event_id=event_id_, event_otp=event_otp_, email=email_, \
             datetime=datetime_, status=status_)
@@ -433,7 +443,8 @@ def attendence_post():
         }
         return make_response(jsonify(payLoad), 200)
 
-    except: # No such event
+    except Exception as e: # No such event
+        debug(e)
         event_id_ = -1
         payLoad = {
             "event_otp":event_otp_,
