@@ -42,6 +42,7 @@ def debug(msg):
 
 
 app = Flask(__name__)
+root = os.path.dirname(os.path.abspath(__file__))
 CORS(app, support_credentials=True)
 basedir = os.path.abspath(os.path.dirname(__file__))
 

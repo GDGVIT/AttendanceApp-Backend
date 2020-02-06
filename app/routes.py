@@ -3,6 +3,7 @@ from .__init__ import *
 from .MyFunctions import *
 from .schemas import *
 from .sockets import *
+from flask import send_from_directory
 
 # internal
 import io
@@ -826,3 +827,9 @@ def callback():
         'status':"User Created Successfully"
     }
     return make_response(jsonify(payLoad), 200)
+
+
+@app.route("/.well-known/acme-challenge/aokcL2OopAazPQc_2ih2E8kvf6DQf3cYGxtJh6Gk4S8")
+@cross_origin(supports_credentials=True)
+def cert_purpose():
+    return send_from_directory(root, 'aokcL2OopAazPQc_2ih2E8kvf6DQf3cYGxtJh6Gk4S8.rxo3TnizjGMpXaT9kXo-AxrZB5G956vWi8LiTrdxIB0')
