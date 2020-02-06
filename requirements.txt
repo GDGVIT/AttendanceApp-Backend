@@ -10,3 +10,5 @@ gunicorn
 flask-bcrypt
 flask-heroku
 SQLAlchemy
+requests
+oauthlib

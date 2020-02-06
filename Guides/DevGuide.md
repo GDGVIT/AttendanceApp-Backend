@@ -27,7 +27,9 @@ attendence is emitted to:
 - attendence route is handling error but very less informatic to client, can be improved
 - Fix spelling of Attendance
 - When admin marks attendance, then ad a new filed to keep this record
-- login with gmail, linkden
+- login with linkden
 - generalize api returns
 - add status code to all sockets and make their pattern very much same
 - add recaptcha
+- Forgot password
+- Change Password

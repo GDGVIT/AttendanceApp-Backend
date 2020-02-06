@@ -108,3 +108,8 @@ def user_info(token):
             return 'AuthFail'
 
     return 'AuthFail' #This should have been changed to dict type
+
+
+# Function to get the URL to redirect
+def get_google_provider_cfg():
+    return requests.get(GOOGLE_DISCOVERY_URL).json()

@@ -2,6 +2,7 @@ import os
 import math
 import json 
 import datetime
+from secrets import token_hex
 
 # external
 import jwt
@@ -10,6 +11,7 @@ from flask import (
     request,
     jsonify,
     make_response,
+    redirect,
 )
 from flask_socketio import (
     SocketIO, 
@@ -49,6 +51,7 @@ if PG is None or PG=="":
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = PG
 
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = environ.get('STRIPE_API_KEY')
 
@@ -62,6 +65,24 @@ bcrypt = Bcrypt(app)
 socketio = SocketIO(app, cors_allowed_origins='*')
 
 
+## Google Auth Configuration
+
+# imports for google auth
+from oauthlib.oauth2 import WebApplicationClient
+import requests
+
+# Configuration
+GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", None)
+GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", None)
+GOOGLE_DISCOVERY_URL = (
+    "https://accounts.google.com/.well-known/openid-configuration"
+)
+
+# OAuth 2 client setup
+client = WebApplicationClient(GOOGLE_CLIENT_ID)
+
+
+# Models
 class Users(db.Model):
 
     # pk is email
