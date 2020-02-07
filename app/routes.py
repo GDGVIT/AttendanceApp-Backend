@@ -85,7 +85,8 @@ def user_login():
             payLoad = {
                 'status': 'fail',
                 'message': 'User does not exsist',
-                'auth_token':''
+                'auth_token':'',
+                'admin_status':0
             }
             return make_response(jsonify(payLoad), 404)
 
@@ -93,24 +94,28 @@ def user_login():
 
         if bcrypt.check_password_hash(user.password, password):   #password == user.password
             auth_token = encode_auth_token(user.id)
+            admin_status_ = Users.query.filter_by(email=email).first().admin_status
             payLoad = {
                 'status':'success',
                 'message':'Successfully logged in',
-                'auth_token':auth_token.decode()
+                'auth_token':auth_token.decode(),
+                'admin_status':admin_status_
             }
             return make_response(jsonify(payLoad), 200)
         else:
             payLoad = {
                 'status': 'fail',
                 'message': 'Wrong Credentials! Check Again.',
-                'auth_token':''
+                'auth_token':'',
+                'admin_status':0
             }
             return make_response(jsonify(payLoad), 401)
     except Exception as e:
         payLoad = {
             'status': 'fail',
             'message': 'Wrong Credentials! Check Again.',
-            'auth_token':''
+            'auth_token':'',
+            'admin_status':0
         }
         return make_response(jsonify(payLoad), 401)
 
@@ -266,7 +271,14 @@ def create_event():
     """
 
     auth_header = request.headers.get('Authorization')
-    user_details = user_info(auth_header)
+    try:
+        user_details = user_info(auth_header)
+    except: # Token Failure
+        payLoad = {
+            'status':'Fail',
+            'message':'Failed to get Secrets'
+        }
+        return make_response(jsonify(payLoad), 500)
     try:
         admin_status_ = user_details.get('admin')
     except:
@@ -281,7 +293,7 @@ def create_event():
         if len(otp_)!=6:
             payLoad = {
                 'Status': 'Fail',
-                'Reason': 'OTP Size Constrain'
+                'Reason': 'OTP Size Constraint'
             }
             return make_response(jsonify(payLoad), 406)
 
