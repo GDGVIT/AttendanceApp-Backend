@@ -1,4 +1,4 @@
-# API DOCS
+# [API DOCS](https://github.com/D-E-F-E-A-T/Flask-Docs-and-Secrets-Check)
 
 ## @app.route('/', methods=['GET', 'POST'])
 ```
