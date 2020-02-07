@@ -320,6 +320,8 @@ def create_event():
             latitude_ = request.json.get('latitude')
             longitude_ = request.json.get('longitude')
             broadcast_choice_ = request.json.get('broadcast_choice')
+            if broadcast_choice_ in ['True', True, 'true', '1', 1]:
+                broadcast_choice_ = 1
         except:
             payLoad = {
                 'Status': 'Fail',
