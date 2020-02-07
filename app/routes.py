@@ -78,13 +78,28 @@ def user_login():
     email=request.json['email']
     password=request.json['password']
 
+    # ReCapchav3 code
+    try:
+        captcha_response = request.json['g-recaptcha-response']
+
+        if not is_human(captcha_response):
+            payLoad = {
+                'status': 'fail',
+                'message': 'sorry-bots-are-not-allowed',
+                'auth_token':'',
+                'admin_status':0
+            }
+            return make_response(jsonify(payLoad), 400)
+    except Exception as e:
+        debug(e)
+
     email_exsist = Users.query.filter_by(email=email).first()
 
     try:
         if email_exsist==None:
             payLoad = {
                 'status': 'fail',
-                'message': 'User does not exsist',
+                'message': 'User-does-not-exsist',
                 'auth_token':'',
                 'admin_status':0
             }
@@ -97,7 +112,7 @@ def user_login():
             admin_status_ = Users.query.filter_by(email=email).first().admin_status
             payLoad = {
                 'status':'success',
-                'message':'Successfully logged in',
+                'message':'Successfully-logged-in',
                 'auth_token':auth_token.decode(),
                 'admin_status':admin_status_
             }
@@ -105,7 +120,7 @@ def user_login():
         else:
             payLoad = {
                 'status': 'fail',
-                'message': 'Wrong Credentials! Check Again.',
+                'message': 'Wrong-Credentials! Check-Again.',
                 'auth_token':'',
                 'admin_status':0
             }
@@ -113,7 +128,7 @@ def user_login():
     except Exception as e:
         payLoad = {
             'status': 'fail',
-            'message': 'Wrong Credentials! Check Again.',
+            'message': 'Wrong-Credentials! Check-Again.',
             'auth_token':'',
             'admin_status':0
         }

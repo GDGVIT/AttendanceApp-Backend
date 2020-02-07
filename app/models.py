@@ -84,6 +84,8 @@ GOOGLE_DISCOVERY_URL = (
 # OAuth 2 client setup
 client = WebApplicationClient(GOOGLE_CLIENT_ID)
 
+# CAPTCHA CONFIG
+CAPTCHA_SECRET = os.environ.get("CAPTCHA_SECRET_KEY", None)
 
 # Models
 class Users(db.Model):
