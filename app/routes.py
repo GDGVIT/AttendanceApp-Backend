@@ -487,7 +487,9 @@ def attendence_post():
 # Routes for Admin
 # To post Attandence (Doesn't matter if failed attendance given or not) \
 # because anyhow we are allowing user to put as many attendences on as they wish
-# on our sockets
+# on our sockets - now we are not allowing multiple attendance by same user for
+# the same event
+# This route has been modified on request by nirmit. See Below
 @app.route('/attendence/update/<email>', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def attendence_update(email):
@@ -503,6 +505,70 @@ def attendence_update(email):
             if user_detail.get('admin'):
                 event_otp_ = request.json['otp']
                 email_ = email
+                
+                otp_check = Events.query.filter_by(otp=event_otp_).first()
+                if otp_check == None:
+                    raise ValueError('No such Event')
+
+                email_check = Users.query.filter_by(email=email_).first()
+                if email_check == None:
+                    raise ValueError('No User with Given Email')
+                
+                event_id_ = Events.query.filter_by(otp = event_otp_).first().id
+                datetime_ = datetime.datetime.now()
+                status_ = 1
+
+                new_attendence = Attendence(event_id=event_id_, event_otp=event_otp_, email=email_, \
+                        datetime=datetime_, status=status_)
+
+                db.session.add(new_attendence)
+                db.session.commit()
+                payLoad = {
+                    "event_otp":event_otp_,
+                    "email":email_,
+                    "datetime":datetime_,
+                    "status":status_
+                }
+                return make_response(jsonify(payLoad), 200)
+        
+            elif user_detail.get('admin') == 0:
+                payLoad = {
+                    'Status':'Fail',
+                    'Reason':'Not Admin'
+                }
+                return make_response(jsonify(payLoad), 403)
+        
+        except:
+            payLoad = {
+                'Status':'Fail',
+                'Reason':'ReCheck OTP and Email'
+            }
+            return make_response(jsonify(payLoad), 404)
+
+    else:
+        payLoad = {
+            'Status':'Fail',
+            'Reason':'AuthFail'
+        }
+        return make_response(jsonify(payLoad), 401)
+
+
+# Modified UpdateAttendance Route
+@app.route('/attendence/update', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def attendence_update():
+
+    # otp, email
+    # here we ignore whether event is going on or closed
+    auth_header = request.headers.get('Authorization')
+    user_detail = user_info(auth_header)
+
+    if user_detail != 'AuthFail':
+
+        try:
+            if user_detail.get('admin'):
+                event_otp_ = request.json['otp']
+                email_ = request.json['email']
                 
                 otp_check = Events.query.filter_by(otp=event_otp_).first()
                 if otp_check == None:
