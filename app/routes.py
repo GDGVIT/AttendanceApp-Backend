@@ -556,7 +556,7 @@ def attendence_update(email):
 # Modified UpdateAttendance Route
 @app.route('/attendence/update', methods=['POST'])
 @cross_origin(supports_credentials=True)
-def attendence_update():
+def attendence_update_mod():
 
     # otp, email
     # here we ignore whether event is going on or closed
