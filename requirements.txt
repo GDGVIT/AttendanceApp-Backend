@@ -8,3 +8,8 @@ marshmallow-sqlalchemy
 postgres
 gunicorn
 flask-bcrypt
+flask-heroku
+SQLAlchemy
+requests
+oauthlib
+flask-cors

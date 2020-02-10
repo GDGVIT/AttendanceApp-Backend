@@ -14,19 +14,6 @@ attendence is emitted to:
 - attendence_namespace-> attendence (to emit client attendence) :emits to the client side admin_namespace then
 - broadcaster_namespace -> attendence comes to this namespace also, from here it's sended to particular room
 
-## To be continued
-
-- Create API endpoints for admin to mark someones attendence
-- Endpoint to generate csv file for a paticular event with attendes details
-- Time check, before attendence verify it's in allowed time limit. Or frontend takes care of this and don't send vague requests \
-or server takes request don't add to db and sends a message Attendence is closed now.
-- fetch creation_date and time_delta then before adding see if valid.
-- An API to give a few otp examples which are available
-
-## To work
-
-- make use of make_response, to add status code as well along with jsonify return in sockets
-
 ## Not doing (Improvements/edge-bug)
 
 - replace flask-jwt with flask-jwt-extended
@@ -38,3 +25,11 @@ or server takes request don't add to db and sends a message Attendence is closed
 - add distance field in Attendence Model
 - handle socket exceptions, use get for dict and seal with catch blocks
 - attendence route is handling error but very less informatic to client, can be improved
+- Fix spelling of Attendance
+- When admin marks attendance, then ad a new filed to keep this record
+- login with linkden
+- generalize api returns
+- add status code to all sockets and make their pattern very much same
+- add recaptcha
+- Forgot password
+- Change Password
