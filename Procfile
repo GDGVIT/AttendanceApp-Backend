@@ -1,2 +1,2 @@
 web: gunicorn gettingstarted.wsgi
-web: gunicorn runner:app
+web: gunicorn -w 4 runner:app
