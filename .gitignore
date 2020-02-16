@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
-
+run.py
 # C extensions
 *.so
 hosting_tip.txt
