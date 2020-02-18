@@ -1030,8 +1030,12 @@ def random_otp():
 
             if user_detail.get('admin'): # NoneType | 0| 1
                 all_events = Events.query.all() # Here Error if no Event
+                all_holded_events = HoldedEvents.query.all()
+
                 used_otps = set()
                 for otp_ in all_events:
+                    used_otps.add(str(otp_.otp))
+                for otp_ in all_holded_events:
                     used_otps.add(str(otp_.otp))
                 
                 total_otps = set()
