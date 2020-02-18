@@ -45,7 +45,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:5000/users",
+			"name": "users info",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -73,7 +73,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:5000/user/login",
+			"name": "gauth login",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -162,7 +162,7 @@
 			"response": []
 		},
 		{
-			"name": "http://127.0.0.1:5000/event/create",
+			"name": "create event",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -278,7 +278,7 @@
 			"response": []
 		},
 		{
-			"name": "127.0.0.1:3000/attendence/update/mail@mail",
+			"name": "update attendence",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -340,7 +340,7 @@
 			"response": []
 		},
 		{
-			"name": "127.0.0.1:3000/events/info",
+			"name": "events info",
 			"request": {
 				"method": "GET",
 				"header": [
@@ -424,6 +424,121 @@
 					]
 				},
 				"description": "Random OTP to help getting otps"
+			},
+			"response": []
+		},
+		{
+			"name": "user login jwt",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"mail@mail\",\n\t\"password\":\"123456\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/user/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "login for user"
+			},
+			"response": []
+		},
+		{
+			"name": "http://0.0.0.0:3000/event/set",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTM1MTg3NTYsImlhdCI6MTU4MTk4Mjc1MSwic3ViIjoyfQ.jyDCeu_igkbI4Qf0qtgBBkN8eokxtFBVuA86a88pEC0",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"otp\":\"000003\",\n\t\"event_name\":\"DefCon\",\n\t\"event_description\":\"I found a new family!\",\n\t\"ending_time_delta\":15,\n\t\"location_range\":100,\n\t\"latitude\":100,\n\t\"longitude\":100,\n\t\"broadcast_choice\":1,\n\t\"start_event\":1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:3000/event/set",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "3000",
+					"path": [
+						"event",
+						"set"
+					]
+				},
+				"description": "Here u send all details required,\nif start_event is set to false then event is not immediately started\nbut added to holded events\nelse it starts immediately.\nSend long and lat of admin so if start_event flag is on then we start the event immediately."
+			},
+			"response": []
+		},
+		{
+			"name": "http://0.0.0.0:3000/event/holded",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTM1MTg3NTYsImlhdCI6MTU4MTk4Mjc1MSwic3ViIjoyfQ.jyDCeu_igkbI4Qf0qtgBBkN8eokxtFBVuA86a88pEC0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://0.0.0.0:3000/event/holded",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "3000",
+					"path": [
+						"event",
+						"holded"
+					]
+				},
+				"description": "Pass the JWT and it gives all the holded events\nif jwt is not passed then 500 will come\nand admin check is performed which shall give 401 if not admin\n200 for success."
 			},
 			"response": []
 		}
