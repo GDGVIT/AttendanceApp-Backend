@@ -131,6 +131,32 @@ class Events(db.Model):
     broadcast_choice = Column(Boolean)  # an option to allow or disallow broadcast to users
 
 
+class HoldedEvents(db.Model):
+    """It stores the info neccessary for an event creation but
+    event is not yet created. Event coordinates are fetched and event
+    is created once the user starts the Event
+    """
+    # On Event creatation it's removed from the HoldedEvents
+    
+    __tablename__ = "holdedevents"
+    
+    id = Column(Integer, primary_key=True)
+
+    creation_date = Column(DateTime) # It's when admin put the event in hold
+    admin_email = Column(String(60)) # This is of admin who actually created the Event
+    # attendence = db.relationship(
+    #     'Attendence', backref='event', lazy=True)
+    # These are the required fields in post request
+    otp = Column(String(6), nullable=False, unique=True) #900,000 Events supported without flushing data (Don't know but I passed more lol)
+    event_name = Column(String(100))
+    event_description = Column(String(2000), nullable=True)
+    ending_time_delta = Column(Integer) #Treated in Minutes
+    location_range = Column(Integer)  # Treated in meters
+    # latitude = Column(Float)
+    # longitude = Column(Float)
+    broadcast_choice = Column(Boolean)  # an option to allow or disallow broadcast to users 
+
+
 class Attendence(db.Model):
 
     # pk is id
