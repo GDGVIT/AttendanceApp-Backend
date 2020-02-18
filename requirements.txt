@@ -13,4 +13,3 @@ SQLAlchemy
 requests
 oauthlib
 flask-cors
-eventlet
