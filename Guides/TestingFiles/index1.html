@@ -9,13 +9,13 @@
     <script type="text/javascript">
     $(document).ready(function() {
     
-        var socket = io.connect('http://127.0.0.1:3000');
-        var socket_attendence = io('http://127.0.0.1:3000/attendence_namespace')
-        var socket_admin = io('http://127.0.0.1:3000/admin_namespace')
-        var socket_rooms = io('http://127.0.0.1:3000/rooms_namespace')
+        var socket = io.connect('https://painhost99.herokuapp.com');
+        var socket_attendence = io('https://painhost99.herokuapp.com/attendence_namespace')
+        var socket_admin = io('https://painhost99.herokuapp.com/admin_namespace')
+        var socket_rooms = io('https://painhost99.herokuapp.com/rooms_namespace')
     
         $('#attendence_button').on('click', function() {
-            socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTIzNzk4MzIsImlhdCI6MTU4MDg0MzgyNywic3ViIjoyfQ.jI5mn0vc58WbRq9KulS4TjfOyspJHC8r2sfjU1A-ai8', 'latitude':100, 'longitude':100.0001});
+            socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTM1OTI5NTIsImlhdCI6MTU4MjA1Njk0Nywic3ViIjo2fQ.sGBT5SRf6d5uaez3LaOSjeV66w_C_hvSab6kbH2A3I8', 'latitude':100, 'longitude':100.0001});
             $('#myMessage').val('');
         });
 

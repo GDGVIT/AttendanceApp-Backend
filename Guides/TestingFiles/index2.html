@@ -12,9 +12,9 @@ I find them working correctly. :) -->
     <script type="text/javascript">
     $(document).ready(function() {
     
-        var socket = io.connect('http://127.0.0.1:3000');
-        var socket_attendence = io('http://127.0.0.1:3000/attendence_namespace')
-        var socket_admin = io('http://127.0.0.1:3000/admin_namespace')
+        var socket = io.connect('https://painhost99.herokuapp.com');
+        var socket_attendence = io('https://painhost99.herokuapp.com/attendence_namespace')
+        var socket_admin = io('https://painhost99.herokuapp.com/admin_namespace')
     
         $('#attendence_button').on('click', function() {
             socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTE2Mzc2NDksImlhdCI6MTU4MDEwMTY0NCwic3ViIjoxfQ.QkM-DsJR0yuVbSL-ElkQeHG0xYPpF_BrA-lJhi8MZqk'});
