@@ -6,7 +6,7 @@ Flask-SocketIO
 pyjwt==1.4.2
 marshmallow-sqlalchemy
 postgres
-gunicorn==18.0
+gunicorn
 flask-bcrypt
 flask-heroku
 SQLAlchemy
