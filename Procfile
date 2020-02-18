@@ -1,2 +1,2 @@
 web: gunicorn gettingstarted.wsgi
-web: gunicorn -w 4 runner:app
+web: gunicorn -k eventlet -w 4 runner:app
