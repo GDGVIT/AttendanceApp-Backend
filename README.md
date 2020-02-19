@@ -1,7 +1,7 @@
 <p align="center">
 	<img src="https://user-images.githubusercontent.com/30529572/72455010-fb38d400-37e7-11ea-9c1e-8cdeb5f5906e.png" />
 	<h2 align="center"> AttendanceApp-Backend  </h2>
-	<h4 align="center"> Progressive Web Application for real time attendance tracking of commmunity members<h4>
+	<h4 align="center"> Progressive Web Application for real time attendance tracking of community members<h4>
 </p>
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/) [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/oct111998/) [![4U](https://forthebadge.com/images/badges/for-you.svg)](https://github.com/GDGVIT/)
