@@ -297,7 +297,7 @@ def create_event():
     try:
         admin_status_ = user_details.get('admin')
     except:
-        admin_status = 0
+        admin_status_ = 0
 
     if user_details != 'AuthFail' and admin_status_:
         creation_date_ = datetime.datetime.now()
@@ -361,6 +361,255 @@ def create_event():
             'message':'Not Admin'
         }
         return make_response(jsonify(payLoad), 401)
+
+
+# Set Event
+@app.route('/event/set', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def set_event():
+
+    """Endpoint to set an Event and put on hold if
+    start now is false
+    Required: Authorized and admin
+    return: event hold status | auth fail
+    """
+    auth_header = request.headers.get('Authorization') # 500 will be thrown if not sended
+    try:
+        user_details = user_info(auth_header)
+    except: # Token Failure
+        payLoad = {
+            'status':'Fail',
+            'message':'Failed to get Secrets'
+        }
+        return make_response(jsonify(payLoad), 500)
+    try:
+        admin_status_ = user_details.get('admin')
+    except:
+        admin_status_ = 0
+
+    if user_details != 'AuthFail' and admin_status_:
+        creation_date_ = datetime.datetime.now()
+        admin_email_ = user_details.get("email")
+
+        otp_ = request.json.get('otp') # 500 is thrown if not sended
+
+        if len(otp_)!=6:
+            payLoad = {
+                'Status': 'Fail',
+                'Reason': 'OTP Size Constraint'
+            }
+            return make_response(jsonify(payLoad), 406)
+
+        try:
+            event_name_ = request.json['event_name']
+            event_description_ = request.json['event_description']
+            ending_time_delta_ = request.json['ending_time_delta']
+            location_range_ = request.json.get('location_range')
+            latitude_ = request.json.get('latitude')
+            longitude_ = request.json.get('longitude')
+            broadcast_choice_ = request.json.get('broadcast_choice')
+
+            start_event_ = request.json.get('start_event')  # New add_on
+            if broadcast_choice_ in ['True', True, 'true', '1', 1]:
+                broadcast_choice_ = 1
+            if start_event_ in ['True', True, 'true', '1', 1]:
+                start_event_ = 1
+        except:
+            payLoad = {
+                'Status': 'Fail',
+                'Reason': 'Fill All Required Details'
+            }
+            return make_response(jsonify(payLoad), 400)
+
+        if location_range_==None or latitude_==None or longitude_==None: # Measure to protect issues
+            latitude_ = -1.1
+            longitude_ = -1.1
+            location_range_ = -1
+
+        otp_check = Events.query.filter_by(otp=otp_).first()
+
+        if otp_check: #exsists
+            payLoad = {
+                'Status': 'Fail',
+                'Reason': 'OTP has expired' #used otp
+            }
+            return make_response(jsonify(payLoad), 400)
+
+        # Checking for HoldedEvents Model
+        otp_check = HoldedEvents.query.filter_by(otp=otp_).first()
+        if otp_check: #exsists
+            payLoad = {
+                'Status': 'Fail',
+                'Reason': 'OTP has expired, Event in hold' #used otp
+            }
+            return make_response(jsonify(payLoad), 400)
+        
+        else:
+            if start_event_ == 1:
+
+                new_event = Events(creation_date= creation_date_, admin_email=admin_email_, \
+                        otp=otp_, event_name=event_name_, event_description=event_description_, \
+                        ending_time_delta=ending_time_delta_, location_range=location_range_, \
+                        latitude=latitude_, longitude=longitude_, broadcast_choice=broadcast_choice_)
+
+                db.session.add(new_event)
+                db.session.commit()
+
+                payLoad = event_schema.jsonify(new_event)
+                return make_response(payLoad, 200) # Object of type Response is not JSON serializable
+           
+            else: # else add it in hold
+
+                new_hold = HoldedEvents(creation_date= creation_date_, admin_email=admin_email_, \
+                        otp=otp_, event_name=event_name_, event_description=event_description_, \
+                        ending_time_delta=ending_time_delta_, location_range=location_range_, \
+                        broadcast_choice=broadcast_choice_)
+                db.session.add(new_hold)
+                db.session.commit()
+
+                payLoad = holded_event_schema.jsonify(new_hold)
+                return make_response(payLoad, 201) # Object of type Response is not JSON serializable
+
+        
+    else:
+        payLoad = {
+            'status':'Fail',
+            'message':'Not Admin'
+        }
+        return make_response(jsonify(payLoad), 401)
+
+
+# Holded Event
+@app.route('/event/start/<otpNumber>', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def start_event(otpNumber):
+    """This will start the event those are present in holded events
+    Post Req: latitude, longitude, authToken
+    """
+    
+    otp_check = Events.query.filter_by(otp=otpNumber).first()
+
+    if otp_check: #exsists
+        payLoad = {
+            'Status': 'Fail',
+            'Reason': 'OTP has expired and Event is Active' #used otp
+        }
+        return make_response(jsonify(payLoad), 400)
+
+    try:
+        latitude_ = request.json.get('latitude')
+        longitude_ = request.json.get('longitude')
+        
+        if latitude_==None or longitude_==None: # Measure to protect issues
+            latitude_ = -1.1
+            longitude_ = -1.1
+    except:
+        payLoad = {
+            'status': 'Fail',
+            'message': 'Ops! Start Event ran into Server Error'
+        }
+        return make_response(jsonify(payLoad), 500)
+
+    auth_header = request.headers.get('Authorization')
+    try:
+        user_details = user_info(auth_header)
+    except: # Token Failure
+        payLoad = {
+            'status':'Fail',
+            'message':'Failed to get Secrets'
+        }
+        return make_response(jsonify(payLoad), 500)
+    try:
+        admin_status_ = user_details.get('admin')
+    except:
+        admin_status_ = 0
+    
+    if user_details != 'AuthFail' and admin_status_:
+        otp_check = HoldedEvents.query.filter_by(otp=otpNumber).first()
+        
+        if otp_check: # not None
+            creation_date_ = otp_check.creation_date
+            admin_email_ = otp_check.admin_email
+            otp_ = otpNumber
+            event_name_ = otp_check.event_name
+            event_description_ = otp_check.event_description
+            ending_time_delta_ = otp_check.ending_time_delta
+            location_range_ = otp_check.location_range
+            # latitude_ = otp_check.latitude
+            # longitude_ = otp_check.longitude
+            broadcast_choice_ = otp_check.broadcast_choice
+
+            new_event = Events(creation_date= creation_date_, admin_email=admin_email_, \
+                    otp=otp_, event_name=event_name_, event_description=event_description_, \
+                    ending_time_delta=ending_time_delta_, location_range=location_range_, \
+                    latitude=latitude_, longitude=longitude_, broadcast_choice=broadcast_choice_)
+
+            db.session.add(new_event)
+            db.session.commit()
+
+            try:
+                HoldedEvents.query.filter_by(otp=otpNumber).delete()
+                db.session.commit()
+            except:
+                payLoad = {
+                    'status': 'Fail',
+                    'message': 'Failed to clear holded event'
+                }
+                return make_response(jsonify(payLoad), 500)
+
+            payLoad = event_schema.jsonify(new_event)
+            return make_response(payLoad, 200) # Object of type Response is not JSON serializable
+ 
+
+        else:
+            payLoad = {
+                'status': 'Fail',
+                'message': 'No such Holded Event'
+            }
+            return make_response(jsonify(payLoad), 404)
+
+    else:
+        payLoad = {
+            'status':'Fail',
+            'message':'Not Admin'
+        }
+        return make_response(jsonify(payLoad), 401)
+
+
+# Holded Events View
+@app.route('/event/holded', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def view_holded():
+    """Shows all holded events from here start event can be clicked
+    and then otp is passed dynamically to the start event
+    """
+
+    auth_header = request.headers.get('Authorization')
+    try:
+        user_details = user_info(auth_header)
+    except: # Token Failure
+        payLoad = {
+            'status':'Fail',
+            'message':'Failed to get Secrets'
+        }
+        return make_response(jsonify(payLoad), 500)
+    try:
+        admin_status_ = user_details.get('admin')
+    except:
+        admin_status_ = 0
+    
+    if user_details != 'AuthFail' and admin_status_:
+        all_holds = HoldedEvents.query.all()
+        result = holded_events_schema.dump(all_holds)
+        payLoad = result
+        return make_response(jsonify(payLoad), 200)
+    else:
+        payLoad = {
+            'status':'Fail',
+            'message':'Not Admin or Auth Fail'
+        }
+        return make_response(jsonify(payLoad), 401)    
+
 
 
 # API is not needed here. For Testing Purposes.
@@ -781,8 +1030,12 @@ def random_otp():
 
             if user_detail.get('admin'): # NoneType | 0| 1
                 all_events = Events.query.all() # Here Error if no Event
+                all_holded_events = HoldedEvents.query.all()
+
                 used_otps = set()
                 for otp_ in all_events:
+                    used_otps.add(str(otp_.otp))
+                for otp_ in all_holded_events:
                     used_otps.add(str(otp_.otp))
                 
                 total_otps = set()

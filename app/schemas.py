@@ -29,3 +29,13 @@ class EventSchema(ma.Schema):
 
 event_schema = EventSchema()
 events_schema = EventSchema(many=True)
+
+
+# Holded Event Schema
+class HoldedEventSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'creation_date', 'admin_email', 'otp', 'event_name', \
+            'event_description', 'ending_time_delta', 'location_range', 'broadcast_choice')
+
+holded_event_schema = HoldedEventSchema()
+holded_events_schema = HoldedEventSchema(many=True)
