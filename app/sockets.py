@@ -74,13 +74,8 @@ def take_attendence_from_user(json_):
 
 
         try: # Integer, else error thrown from distance function
-            # user_latitude = json_['latitude']
-            # user_longitude = json_['longitude'] # send them from client
             user_latitude = json_['latitude']
-            user_latitude = validFloat(user_latitude)
             user_longitude = json_['longitude'] # send them from client
-            user_longitude = validFloat(user_longitude)
-            # Not Making Massive Changes, Though some code below can be removed.
             assert type(user_latitude)==type(float()) or type(user_latitude)==type(int())
             assert type(user_longitude)==type(float()) or type(user_longitude)==type(int())
         except:
