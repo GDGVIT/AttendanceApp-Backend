@@ -318,9 +318,7 @@ def create_event():
             ending_time_delta_ = request.json['ending_time_delta']
             location_range_ = request.json.get('location_range')
             latitude_ = request.json.get('latitude')
-            latitude_ = validFloat(latitude_)
             longitude_ = request.json.get('longitude')
-            longitude_ = validFloat(longitude_)
             broadcast_choice_ = request.json.get('broadcast_choice')
             if broadcast_choice_ in ['True', True, 'true', '1', 1]:
                 broadcast_choice_ = 1
@@ -408,9 +406,7 @@ def set_event():
             ending_time_delta_ = request.json['ending_time_delta']
             location_range_ = request.json.get('location_range')
             latitude_ = request.json.get('latitude')
-            latitude_ = validFloat(latitude_)
             longitude_ = request.json.get('longitude')
-            longitude_ = validFloat(longitude_)
             broadcast_choice_ = request.json.get('broadcast_choice')
 
             start_event_ = request.json.get('start_event')  # New add_on
@@ -502,9 +498,7 @@ def start_event(otpNumber):
 
     try:
         latitude_ = request.json.get('latitude')
-        latitude_ = validFloat(latitude_)
         longitude_ = request.json.get('longitude')
-        longitude_ = validFloat(longitude_)
         
         if latitude_==None or longitude_==None: # Measure to protect issues
             latitude_ = -1.1

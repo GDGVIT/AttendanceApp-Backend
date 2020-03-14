@@ -14,7 +14,7 @@
         var socket_rooms = io('https://painhost99.herokuapp.com/rooms_namespace')
     
         $('#attendence_button').on('click', function() {
-            socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTU3NDkzODAsImlhdCI6MTU4NDIxMzM3NSwic3ViIjo2fQ.nqpnkoJV1ojJOnMNucGIT9T-CEfP3hgaWPlGK1qBKMM', 'latitude':100, 'longitude':100.0001});
+            socket_attendence.emit('attendence_request', {'otp':$('#myMessage').val(), 'token':'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTM1OTE1NDMsImlhdCI6MTU4MjA1NTUzOCwic3ViIjo0fQ.0HtN_inylnIGg7QMxG1PjGqBxebwgx2S_owy0g0pjnI', 'latitude':100, 'longitude':100.0001});
             $('#myMessage').val('');
         });
 

@@ -125,11 +125,3 @@ def is_human(captcha_response):
     response = requests.post("https://www.google.com/recaptcha/api/siteverify", payload)
     response_text = json.loads(response.text)
     return response_text['success']
-
-
-
-def validFloat(someString):
-    try:
-        return float(someString)
-    except:
-        return -1.1
