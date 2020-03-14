@@ -4,7 +4,7 @@
 	<h4 align="center"> Progressive Web Application for real time attendance tracking of community members<h4>
 </p>
 	
-[![Build Status](https://travis-ci.org/oct111998/AttendanceApp-Backend.svg?branch=master)](https://travis-ci.org/oct111998/AttendanceApp-Backend)</br>
+[![Build Status](https://travis-ci.org/1UC1F3R616/AttendanceApp-Backend.svg?branch=master)](https://travis-ci.org/oct111998/AttendanceApp-Backend)</br>
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/) [![ForTheBadge built-with-swag](http://ForTheBadge.com/images/badges/built-with-swag.svg)](https://GitHub.com/oct111998/) [![4U](https://forthebadge.com/images/badges/for-you.svg)](https://github.com/GDGVIT/)
 </br>
 [![GitHub stars](https://img.shields.io/github/stars/GDGVIT/AttendanceApp-Backend.svg?style=social&label=Star&maxAge=2592000)](https://GitHub.com/GDGVIT/AttendanceApp-Backend/stargazers/)[![GitHub followers](https://img.shields.io/github/followers/oct111998.svg?style=social&label=Follow&maxAge=2592000)](https://github.com/oct111998?tab=followers)
