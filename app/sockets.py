@@ -240,11 +240,13 @@ def take_attendence_from_user(json_):
                     event_name_ = event.event_name
                     admin_email_ = event.admin_email
                     attendence_status = 'Success' # This param is for admin only
+                    broadcast_choice_ = str(event.broadcast_choice)
                 except:
                     event_name_ = ''
                     admin_email_ = ''
                     otp_ = -1
                     attendence_status = 'Failure' # This param is for admin only
+                    broadcast_choice_ = '0'
                 
                 payLoad = {
                     'email':user_info(token_).get("email"),
@@ -255,7 +257,8 @@ def take_attendence_from_user(json_):
                     'admin_email':admin_email_, # use this to send to specific admin
                     'otp':otp_,
                     'Reason':Reason,
-                    'StatusCode':StatusCode
+                    'StatusCode':StatusCode,
+                    'BroadcastChoice':broadcast_choice_,
                 }
                 emit('admin_listen', json.dumps(payLoad), namespace='/admin_namespace')
             else:
@@ -270,6 +273,7 @@ def take_attendence_from_user(json_):
             'admin_email':'',
             'otp':-1,
             'Reason':Reason,
-            'StatusCode':StatusCode
+            'StatusCode':StatusCode,
+            'BroadcastChoice':broadcast_choice_,
         }
         emit('admin_listen', json.dumps(payLoad), namespace='/admin_namespace')
