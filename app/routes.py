@@ -416,8 +416,13 @@ def set_event():
             start_event_ = request.json.get('start_event')  # New add_on
             if broadcast_choice_ in ['True', True, 'true', '1', 1]:
                 broadcast_choice_ = 1
+            elif broadcast_choice_ in ['False', False, 'false', '0', 0]:
+                broadcast_choice_ = 0
+
             if start_event_ in ['True', True, 'true', '1', 1]:
                 start_event_ = 1
+            elif start_event_ in ['False', False, 'false', '0', 0]:
+                start_event_ = 0
         except:
             payLoad = {
                 'Status': 'Fail',
