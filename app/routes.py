@@ -1016,6 +1016,39 @@ def event_info(otp):
         return make_response(jsonify(payLoad), 401)
 
 
+
+@app.route('/events/ongoing', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def event_ongoing():
+    '''
+    Returns Ongoing Events
+    '''
+    datetime_ = datetime.datetime.now()
+    events = Events.query.all()
+    
+    ongoing = []
+    for event in events:
+        start_time = event.creation_date
+        time_delta = event.ending_time_delta
+        datetime_check = start_time + timedelta(minutes=time_delta)
+
+        if datetime_ < datetime_check:
+            ongoing.append(event)
+    
+    if len(ongoing) < 1:
+        payLoad = {
+
+        }
+    else:
+        payLoad = {
+
+        }
+        for event in ongoing:
+            payload[event.event_name] = event.event_description
+    
+    return make_response(jsonify(payLoad), 200)
+
+
 # Random Valid OTP Generator
 
 @app.route('/random/otp', methods=['GET'])
