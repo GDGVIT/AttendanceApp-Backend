@@ -1044,7 +1044,7 @@ def event_ongoing():
 
         }
         for event in ongoing:
-            payload[event.event_name] = event.event_description
+            payLoad[event.event_name] = event.event_description
     
     return make_response(jsonify(payLoad), 200)
 
