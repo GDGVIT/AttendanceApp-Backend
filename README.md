@@ -66,10 +66,9 @@
 
 ## Contributors
 
-[![](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/images/0)](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/links/0)[![](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/images/1)](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/links/1)[![](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/images/2)](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/links/2)[![](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/images/3)](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/links/3)[![](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/images/4)](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/links/4)[![](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/images/5)](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/links/5)[![](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/images/6)](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/links/6)[![](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/images/7)](https://sourcerer.io/fame/oct111998/GDGVIT/AttendanceApp-Backend/links/7)
-</br></br>
-[![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://github.com/oct111998) 
-[![LinkedIn](https://img.shields.io/static/v1.svg?label=Connect&message=@Kush&color=grey&logo=linkedin&labelColor=blue&style=social)](https://www.linkedin.com/in/kush-choudhary-567b38169?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BDYkgbUGhTniMSRqOUkdN3A%3D%3D) [![Instagram](https://img.shields.io/badge/Instagram-follow-yellow.svg?logo=instagram&logoColor=white)](https://www.instagram.com/kush.philosopher/)
+
+[![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://github.com/1UC1F3R616) 
+[![LinkedIn](https://img.shields.io/static/v1.svg?label=Connect&message=@Kush&color=grey&logo=linkedin&labelColor=blue&style=social)](https://www.linkedin.com/in/kush-choudhary-567b38169?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BDYkgbUGhTniMSRqOUkdN3A%3D%3D) [![Instagram](https://img.shields.io/badge/Instagram-follow-yellow.svg?logo=instagram&logoColor=white)](https://www.instagram.com/1UC1F3R616/)
 
 <br>
 <br>
