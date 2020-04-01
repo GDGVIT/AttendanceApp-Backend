@@ -416,8 +416,13 @@ def set_event():
             start_event_ = request.json.get('start_event')  # New add_on
             if broadcast_choice_ in ['True', True, 'true', '1', 1]:
                 broadcast_choice_ = 1
+            elif broadcast_choice_ in ['False', False, 'false', '0', 0]:
+                broadcast_choice_ = 0
+
             if start_event_ in ['True', True, 'true', '1', 1]:
                 start_event_ = 1
+            elif start_event_ in ['False', False, 'false', '0', 0]:
+                start_event_ = 0
         except:
             payLoad = {
                 'Status': 'Fail',
@@ -1009,6 +1014,39 @@ def event_info(otp):
             'Reason':'AuthFail'
         }
         return make_response(jsonify(payLoad), 401)
+
+
+
+@app.route('/events/ongoing', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def event_ongoing():
+    '''
+    Returns Ongoing Events
+    '''
+    datetime_ = datetime.datetime.now()
+    events = Events.query.all()
+    
+    ongoing = []
+    for event in events:
+        start_time = event.creation_date
+        time_delta = event.ending_time_delta
+        datetime_check = start_time + timedelta(minutes=time_delta)
+
+        if datetime_ < datetime_check:
+            ongoing.append(event)
+    
+    if len(ongoing) < 1:
+        payLoad = {
+
+        }
+    else:
+        payLoad = {
+
+        }
+        for event in ongoing:
+            payLoad[event.event_name] = event.event_description
+    
+    return make_response(jsonify(payLoad), 200)
 
 
 # Random Valid OTP Generator
