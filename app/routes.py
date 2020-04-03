@@ -304,6 +304,12 @@ def create_event():
         admin_email_ = user_details.get("email")
 
         otp_ = request.json.get('otp')
+        if otp_ is None or otp_ == '':
+            payLoad = {
+                'Status': 'Fail',
+                'Reason': 'OTP Size Constraint'
+            }
+            return make_response(jsonify(payLoad), 406)
 
         if len(otp_)!=6:
             payLoad = {
