@@ -111,7 +111,7 @@ def user_login():
             auth_token = encode_auth_token(user.id)
             admin_status_ = Users.query.filter_by(email=email).first().admin_status
 
-            if admin_status_in [1, True, '1', 'true']:
+            if admin_status in [1, True, '1', 'true']:
             
                 payLoad = {
                 'status':'fail',
