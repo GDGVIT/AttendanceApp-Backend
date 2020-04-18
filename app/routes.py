@@ -191,9 +191,9 @@ def admin_login():
                 
                 payLoad = {
                 'status':'fail',
-                'message':'Not-Admin',
+                'message':'This-Request-Is-Not-Available',
                 'auth_token':'',
-                'admin_status':admin_status_
+                'admin_status':'Kept-Secret'
                 }
                 return make_response(jsonify(payLoad), 403)
 
