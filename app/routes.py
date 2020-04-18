@@ -21,6 +21,21 @@ def testing_purpose():
 @cross_origin(supports_credentials=True)
 def user_signup():
 
+    # ReCapchav3 code
+    try:
+        captcha_response = request.json['g-recaptcha-response']
+
+        if not is_human(captcha_response):
+            payLoad = {
+                'status': 'fail',
+                'message': 'sorry-bots-are-not-allowed',
+                'auth_token':'',
+                'admin_status':0
+            }
+            return make_response(jsonify(payLoad), 400)
+    except Exception as e:
+        debug(e)
+
     username=request.json['username']
     password = request.json['password']
     password = bcrypt.generate_password_hash(password).decode() # hashed, better than SHA1
@@ -75,9 +90,6 @@ def user_signup():
 @cross_origin(supports_credentials=True)
 def user_login():
 
-    email=request.json['email']
-    password=request.json['password']
-
     # ReCapchav3 code
     try:
         captcha_response = request.json['g-recaptcha-response']
@@ -92,6 +104,9 @@ def user_login():
             return make_response(jsonify(payLoad), 400)
     except Exception as e:
         debug(e)
+
+    email=request.json['email']
+    password=request.json['password']
 
     email_exsist = Users.query.filter_by(email=email).first()
 
@@ -151,9 +166,6 @@ def user_login():
 @cross_origin(supports_credentials=True)
 def admin_login():
 
-    email=request.json['email']
-    password=request.json['password']
-
     # ReCapchav3 code
     try:
         captcha_response = request.json['g-recaptcha-response']
@@ -168,6 +180,10 @@ def admin_login():
             return make_response(jsonify(payLoad), 400)
     except Exception as e:
         debug(e)
+
+    email=request.json['email']
+    password=request.json['password']
+    
 
     email_exsist = Users.query.filter_by(email=email).first()
 
