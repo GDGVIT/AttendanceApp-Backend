@@ -110,6 +110,17 @@ def user_login():
         if bcrypt.check_password_hash(user.password, password):   #password == user.password
             auth_token = encode_auth_token(user.id)
             admin_status_ = Users.query.filter_by(email=email).first().admin_status
+
+            if admin_status_in [1, True, '1', 'true']:
+            
+                payLoad = {
+                'status':'fail',
+                'message':'This-Request-Is-Not-Available',
+                'auth_token':'',
+                'admin_status':'Kept Secret'
+                }
+                return make_response(jsonify(payLoad), 403)
+
             payLoad = {
                 'status':'success',
                 'message':'Successfully-logged-in',
@@ -175,14 +186,16 @@ def admin_login():
         if bcrypt.check_password_hash(user.password, password):   #password == user.password
             auth_token = encode_auth_token(user.id)
             admin_status_ = Users.query.filter_by(email=email).first().admin_status
+            
             if admin_status_ in ['0', False, 'false', 'False', 0]:
+                
                 payLoad = {
                 'status':'fail',
                 'message':'Not-Admin',
                 'auth_token':'',
                 'admin_status':admin_status_
-            }
-            return make_response(jsonify(payLoad), 403)
+                }
+                return make_response(jsonify(payLoad), 403)
 
             payLoad = {
                 'status':'success',
