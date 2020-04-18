@@ -135,6 +135,81 @@ def user_login():
         return make_response(jsonify(payLoad), 401)
 
 
+# admin login
+@app.route('/admin/login', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def admin_login():
+
+    email=request.json['email']
+    password=request.json['password']
+
+    # ReCapchav3 code
+    try:
+        captcha_response = request.json['g-recaptcha-response']
+
+        if not is_human(captcha_response):
+            payLoad = {
+                'status': 'fail',
+                'message': 'sorry-bots-are-not-allowed',
+                'auth_token':'',
+                'admin_status':0
+            }
+            return make_response(jsonify(payLoad), 400)
+    except Exception as e:
+        debug(e)
+
+    email_exsist = Users.query.filter_by(email=email).first()
+
+    try:
+        if email_exsist==None:
+            payLoad = {
+                'status': 'fail',
+                'message': 'User-does-not-exsist',
+                'auth_token':'',
+                'admin_status':0
+            }
+            return make_response(jsonify(payLoad), 404)
+
+        user = Users.query.filter_by(email=request.json['email']).first()
+
+        if bcrypt.check_password_hash(user.password, password):   #password == user.password
+            auth_token = encode_auth_token(user.id)
+            admin_status_ = Users.query.filter_by(email=email).first().admin_status
+            if admin_status_ in ['0', False, 'false', 'False', 0]:
+                payLoad = {
+                'status':'fail',
+                'message':'Not-Admin',
+                'auth_token':'',
+                'admin_status':admin_status_
+            }
+            return make_response(jsonify(payLoad), 403)
+
+            payLoad = {
+                'status':'success',
+                'message':'Successfully-logged-in',
+                'auth_token':auth_token.decode(),
+                'admin_status':admin_status_
+            }
+            return make_response(jsonify(payLoad), 200)
+        else:
+            payLoad = {
+                'status': 'fail',
+                'message': 'Wrong-Credentials! Check-Again.',
+                'auth_token':'',
+                'admin_status':0
+            }
+            return make_response(jsonify(payLoad), 401)
+    except Exception as e:
+        payLoad = {
+            'status': 'fail',
+            'message': 'Wrong-Credentials! Check-Again.',
+            'auth_token':'',
+            'admin_status':0
+        }
+        return make_response(jsonify(payLoad), 401)
+
+
+
 # This is for testing, it may not be needed
 @app.route('/user/logged', methods=['GET'])
 @cross_origin(supports_credentials=True)
