@@ -276,8 +276,12 @@ def admin_signup():
         }
         return make_response(jsonify(payLoad), 208)
 
-    new_user = Users(username=username, password=password, email=email, admin_status=1)
+    new_user = Users(username=username, password=password, email=email)
     db.session.add(new_user)
+    db.session.commit()
+    
+    admin_user = Users.query.filter_by(email=email).first()
+    admin_user.admin_status = 1
     db.session.commit()
 
     user = Users.query.filter_by(email=request.json['email']).first()
