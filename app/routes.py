@@ -241,7 +241,7 @@ def admin_login():
 # user signup
 @app.route('/admin/signup', methods=['POST'])
 @cross_origin(supports_credentials=True)
-def user_signup():
+def admin_signup():
 
     # ReCapchav3 code
     try:
