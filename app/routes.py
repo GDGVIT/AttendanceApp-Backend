@@ -721,7 +721,7 @@ def start_event(otpNumber):
         otp_check = HoldedEvents.query.filter_by(otp=otpNumber).first()
         
         ## Checking if the Admin is the same admin who set the event
-        setter_admin = HoldedEvents.query.filter(otp=otpNumber).first()
+        setter_admin = HoldedEvents.query.filter_by(otp=otpNumber).first()
         if setter_admin != None:
             setter_email = setter_admin.admin_email
             if setter_email != user_details.get('email'):
@@ -973,7 +973,7 @@ def attendence_update(email):
 
 
 
-                setter_admin = Events.query.filter(otp=event_otp_).first()
+                setter_admin = Events.query.filter_by(otp=event_otp_).first()
                 if setter_admin != None:
                     setter_email = setter_admin.admin_email
                     if setter_email != user_detail.get('email'):
