@@ -238,6 +238,74 @@ def admin_login():
         return make_response(jsonify(payLoad), 401)
 
 
+# user signup
+@app.route('/admin/signup', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def user_signup():
+
+    # ReCapchav3 code
+    try:
+        captcha_response = request.json['g-recaptcha-response']
+
+        if not is_human(captcha_response):
+            payLoad = {
+                'status': 'fail',
+                'message': 'sorry-bots-are-not-allowed',
+                'auth_token':'',
+                'admin_status':1
+            }
+            return make_response(jsonify(payLoad), 400)
+    except Exception as e:
+        debug(e)
+
+    username=request.json['username']
+    password = request.json['password']
+    password = bcrypt.generate_password_hash(password).decode() # hashed, better than SHA1
+    email=request.json['email']
+
+    email_check = Users.query.filter_by(email=email).first()
+
+    if email_check:
+        payLoad = {
+            'username':'',
+            'password':'',
+            'email':'',
+            'admin_status':1,
+            'jwt':'',
+            'status':'Admin Already Exsists'
+        }
+        return make_response(jsonify(payLoad), 208)
+
+    new_user = Users(username=username, password=password, email=email, admin_status=1)
+    db.session.add(new_user)
+    db.session.commit()
+
+    user = Users.query.filter_by(email=request.json['email']).first()
+    auth_token = encode_auth_token(user.id)
+
+    try:
+        TokenValue = auth_token.decode()
+    except Exception as e: # TypeError object has no attribute Token
+        payLoad = {
+        'username':username,
+        'password':password,
+        'email':email,
+        'admin_status':1,
+        'jwt':'',
+        'status':"Failed to generate Token"
+        }
+        return make_response(jsonify(payLoad), 500)
+
+    payLoad = {
+        'username':username,
+        'password':password,
+        'email':email,
+        'admin_status':1,
+        'jwt':TokenValue,
+        'status':"User Created Successfully"
+    }
+    return make_response(jsonify(payLoad), 200)
+
 
 # This is for testing, it may not be needed
 @app.route('/user/logged', methods=['GET'])
