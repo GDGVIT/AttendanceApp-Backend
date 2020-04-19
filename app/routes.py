@@ -279,7 +279,7 @@ def admin_signup():
     new_user = Users(username=username, password=password, email=email)
     db.session.add(new_user)
     db.session.commit()
-    
+
     admin_user = Users.query.filter_by(email=email).first()
     admin_user.admin_status = 1
     db.session.commit()
@@ -720,6 +720,17 @@ def start_event(otpNumber):
     if user_details != 'AuthFail' and admin_status_:
         otp_check = HoldedEvents.query.filter_by(otp=otpNumber).first()
         
+        ## Checking if the Admin is the same admin who set the event
+        setter_admin = HoldedEvents.query.filter(otp=otpNumber).first()
+        if setter_admin != None:
+            setter_email = setter_admin.admin_email
+            if setter_email != user_details.get('email'):
+                payLoad = {
+                    'status':'Fail',
+                    'message':'You-Are-Not-Allowed-To-Start-This-Event'
+                }
+                return make_response(jsonify(payLoad), 403)
+
         if otp_check: # not None
             creation_date_ = otp_check.creation_date
             admin_email_ = otp_check.admin_email
@@ -956,6 +967,25 @@ def attendence_update(email):
                 if email_check == None:
                     raise ValueError('No User with Given Email')
                 
+                ## Checking if the Admin is the same admin who set the event
+                
+
+
+
+
+                setter_admin = Events.query.filter(otp=event_otp_).first()
+                if setter_admin != None:
+                    setter_email = setter_admin.admin_email
+                    if setter_email != user_detail.get('email'):
+                        payLoad = {
+                            'status':'Fail',
+                            'message':'You-Are-Not-Allowed-To-Update-This-Attendance'
+                        }
+                        return make_response(jsonify(payLoad), 403)
+
+
+
+
                 event_id_ = Events.query.filter_by(otp = event_otp_).first().id
                 datetime_ = datetime.datetime.now()
                 status_ = 1
