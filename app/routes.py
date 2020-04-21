@@ -21,6 +21,21 @@ def testing_purpose():
 @cross_origin(supports_credentials=True)
 def user_signup():
 
+    # ReCapchav3 code
+    try:
+        captcha_response = request.json['g-recaptcha-response']
+
+        if not is_human(captcha_response):
+            payLoad = {
+                'status': 'fail',
+                'message': 'sorry-bots-are-not-allowed',
+                'auth_token':'',
+                'admin_status':0
+            }
+            return make_response(jsonify(payLoad), 400)
+    except Exception as e:
+        debug(e)
+
     username=request.json['username']
     password = request.json['password']
     password = bcrypt.generate_password_hash(password).decode() # hashed, better than SHA1
@@ -75,9 +90,6 @@ def user_signup():
 @cross_origin(supports_credentials=True)
 def user_login():
 
-    email=request.json['email']
-    password=request.json['password']
-
     # ReCapchav3 code
     try:
         captcha_response = request.json['g-recaptcha-response']
@@ -92,6 +104,9 @@ def user_login():
             return make_response(jsonify(payLoad), 400)
     except Exception as e:
         debug(e)
+
+    email=request.json['email']
+    password=request.json['password']
 
     email_exsist = Users.query.filter_by(email=email).first()
 
@@ -110,6 +125,17 @@ def user_login():
         if bcrypt.check_password_hash(user.password, password):   #password == user.password
             auth_token = encode_auth_token(user.id)
             admin_status_ = Users.query.filter_by(email=email).first().admin_status
+
+            if admin_status_ in [1, True, '1', 'true']:
+            
+                payLoad = {
+                'status':'fail',
+                'message':'This-Request-Is-Not-Available',
+                'auth_token':'',
+                'admin_status':'Kept Secret'
+                }
+                return make_response(jsonify(payLoad), 403)
+
             payLoad = {
                 'status':'success',
                 'message':'Successfully-logged-in',
@@ -133,6 +159,156 @@ def user_login():
             'admin_status':0
         }
         return make_response(jsonify(payLoad), 401)
+
+
+# admin login
+@app.route('/admin/login', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def admin_login():
+
+    # ReCapchav3 code
+    try:
+        captcha_response = request.json['g-recaptcha-response']
+
+        if not is_human(captcha_response):
+            payLoad = {
+                'status': 'fail',
+                'message': 'sorry-bots-are-not-allowed',
+                'auth_token':'',
+                'admin_status':0
+            }
+            return make_response(jsonify(payLoad), 400)
+    except Exception as e:
+        debug(e)
+
+    email=request.json['email']
+    password=request.json['password']
+    
+
+    email_exsist = Users.query.filter_by(email=email).first()
+
+    try:
+        if email_exsist==None:
+            payLoad = {
+                'status': 'fail',
+                'message': 'User-does-not-exsist',
+                'auth_token':'',
+                'admin_status':0
+            }
+            return make_response(jsonify(payLoad), 404)
+
+        user = Users.query.filter_by(email=request.json['email']).first()
+
+        if bcrypt.check_password_hash(user.password, password):   #password == user.password
+            auth_token = encode_auth_token(user.id)
+            admin_status_ = Users.query.filter_by(email=email).first().admin_status
+            
+            if admin_status_ in ['0', False, 'false', 'False', 0]:
+                
+                payLoad = {
+                'status':'fail',
+                'message':'This-Request-Is-Not-Available',
+                'auth_token':'',
+                'admin_status':'Kept-Secret'
+                }
+                return make_response(jsonify(payLoad), 403)
+
+            payLoad = {
+                'status':'success',
+                'message':'Successfully-logged-in',
+                'auth_token':auth_token.decode(),
+                'admin_status':admin_status_
+            }
+            return make_response(jsonify(payLoad), 200)
+        else:
+            payLoad = {
+                'status': 'fail',
+                'message': 'Wrong-Credentials! Check-Again.',
+                'auth_token':'',
+                'admin_status':0
+            }
+            return make_response(jsonify(payLoad), 401)
+    except Exception as e:
+        payLoad = {
+            'status': 'fail',
+            'message': 'Wrong-Credentials! Check-Again.',
+            'auth_token':'',
+            'admin_status':0
+        }
+        return make_response(jsonify(payLoad), 401)
+
+
+# user signup
+@app.route('/admin/signup', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def admin_signup():
+
+    # ReCapchav3 code
+    try:
+        captcha_response = request.json['g-recaptcha-response']
+
+        if not is_human(captcha_response):
+            payLoad = {
+                'status': 'fail',
+                'message': 'sorry-bots-are-not-allowed',
+                'auth_token':'',
+                'admin_status':1
+            }
+            return make_response(jsonify(payLoad), 400)
+    except Exception as e:
+        debug(e)
+
+    username=request.json['username']
+    password = request.json['password']
+    password = bcrypt.generate_password_hash(password).decode() # hashed, better than SHA1
+    email=request.json['email']
+
+    email_check = Users.query.filter_by(email=email).first()
+
+    if email_check:
+        payLoad = {
+            'username':'',
+            'password':'',
+            'email':'',
+            'admin_status':1,
+            'jwt':'',
+            'status':'Admin Already Exsists'
+        }
+        return make_response(jsonify(payLoad), 208)
+
+    new_user = Users(username=username, password=password, email=email)
+    db.session.add(new_user)
+    db.session.commit()
+
+    admin_user = Users.query.filter_by(email=email).first()
+    admin_user.admin_status = 1
+    db.session.commit()
+
+    user = Users.query.filter_by(email=request.json['email']).first()
+    auth_token = encode_auth_token(user.id)
+
+    try:
+        TokenValue = auth_token.decode()
+    except Exception as e: # TypeError object has no attribute Token
+        payLoad = {
+        'username':username,
+        'password':password,
+        'email':email,
+        'admin_status':1,
+        'jwt':'',
+        'status':"Failed to generate Token"
+        }
+        return make_response(jsonify(payLoad), 500)
+
+    payLoad = {
+        'username':username,
+        'password':password,
+        'email':email,
+        'admin_status':1,
+        'jwt':TokenValue,
+        'status':"User Created Successfully"
+    }
+    return make_response(jsonify(payLoad), 200)
 
 
 # This is for testing, it may not be needed
@@ -304,6 +480,12 @@ def create_event():
         admin_email_ = user_details.get("email")
 
         otp_ = request.json.get('otp')
+        if otp_ is None or otp_ == '':
+            payLoad = {
+                'Status': 'Fail',
+                'Reason': 'OTP Size Constraint'
+            }
+            return make_response(jsonify(payLoad), 406)
 
         if len(otp_)!=6:
             payLoad = {
@@ -538,6 +720,17 @@ def start_event(otpNumber):
     if user_details != 'AuthFail' and admin_status_:
         otp_check = HoldedEvents.query.filter_by(otp=otpNumber).first()
         
+        ## Checking if the Admin is the same admin who set the event
+        setter_admin = HoldedEvents.query.filter_by(otp=otpNumber).first()
+        if setter_admin != None:
+            setter_email = setter_admin.admin_email
+            if setter_email != user_details.get('email'):
+                payLoad = {
+                    'status':'Fail',
+                    'message':'You-Are-Not-Allowed-To-Start-This-Event'
+                }
+                return make_response(jsonify(payLoad), 403)
+
         if otp_check: # not None
             creation_date_ = otp_check.creation_date
             admin_email_ = otp_check.admin_email
@@ -774,6 +967,25 @@ def attendence_update(email):
                 if email_check == None:
                     raise ValueError('No User with Given Email')
                 
+                ## Checking if the Admin is the same admin who set the event
+                
+
+
+
+
+                setter_admin = Events.query.filter_by(otp=event_otp_).first()
+                if setter_admin != None:
+                    setter_email = setter_admin.admin_email
+                    if setter_email != user_detail.get('email'):
+                        payLoad = {
+                            'status':'Fail',
+                            'message':'You-Are-Not-Allowed-To-Update-This-Attendance'
+                        }
+                        return make_response(jsonify(payLoad), 403)
+
+
+
+
                 event_id_ = Events.query.filter_by(otp = event_otp_).first().id
                 datetime_ = datetime.datetime.now()
                 status_ = 1

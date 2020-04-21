@@ -124,7 +124,10 @@ def is_human(captcha_response):
     payload = {'response':captcha_response, 'secret':secret}
     response = requests.post("https://www.google.com/recaptcha/api/siteverify", payload)
     response_text = json.loads(response.text)
-    return response_text['success']
+    if response_text['success'] in ['True', 'true', '1', True]:
+        return True
+    else:
+        return False
 
 
 
