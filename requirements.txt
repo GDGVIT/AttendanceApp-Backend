@@ -3,7 +3,7 @@ Flask-SQLAlchemy
 flask-marshmallow
 eventlet
 Flask-SocketIO
-pyjwt==1.4.2
+pyjwt==1.5.1
 marshmallow-sqlalchemy
 postgres
 gunicorn
